@@ -1,4 +1,4 @@
-import 'package:nukak/view/homeView.dart';
+import 'package:nukak/view/HomeView.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
-          child: homeView(),
+          child: HomeView(),
         ),
       ),
     );
