@@ -2,7 +2,6 @@ import 'package:nukak/view/HomeView.dart';
 import 'package:nukak/view/FavoriteView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class ProfileView extends StatefulWidget {
   @override

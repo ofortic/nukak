@@ -20,18 +20,23 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
-        title: Text('Nukak'),
-        backgroundColor: Color(0xFFFF8F00),
+        title: Text(
+          'Nukak',
+          style: TextStyle(color: Colors.black, fontFamily: 'Nunito'),
+        ),
+        backgroundColor: Color(0xFFE4D5C2),
       ),
       body: tabs[_currentIndex],
+      backgroundColor: Color(0xFFE4D5C2),
       //body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
+        type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
-        backgroundColor: Color(0xFFFFFFFF),
-        selectedItemColor: Colors.amber,
-        unselectedItemColor: Colors.amber.withOpacity(.80),
+        backgroundColor: Color(0xFFBDBDBD),
+        selectedItemColor: Color(0xFFFF8F00),
+        unselectedItemColor: Colors.black.withOpacity(.60),
         selectedFontSize: 16,
         unselectedFontSize: 14,
         onTap: (value) {
