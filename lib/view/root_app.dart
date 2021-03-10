@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/view/favorites/FavoriteView.dart';
+import 'package:nukak/view/profile/ProfileView.dart';
+import 'home/HomeView.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -19,17 +22,10 @@ class _RootAppState extends State<RootApp> {
   }
 
   Widget getBody() {
+    List<Widget> views = [ProfileView(), HomeView(), FavoriteView()];
     return IndexedStack(
       index: pageIndex,
-      children: <Widget>[
-        Center(
-          child: Text(
-            "Home Page",
-            style: TextStyle(
-                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-          ),
-        )
-      ],
+      children: views,
     );
   }
 

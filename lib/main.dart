@@ -1,4 +1,4 @@
-import 'package:nukak/root_app.dart';
+import 'package:nukak/view/root_app.dart';
 import 'package:nukak/view/home/HomeView.dart';
 import 'package:flutter/material.dart';
 

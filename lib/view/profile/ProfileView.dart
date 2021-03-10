@@ -1,5 +1,3 @@
-import 'package:nukak/view/home/HomeView.dart';
-import 'package:nukak/view/favorites/FavoriteView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,5 +8,20 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   @override
-  Widget build(BuildContext context) {}
+  Widget build(BuildContext context) {
+    return getBody();
+  }
+
+  Widget getBody() {
+    return Center(
+      child: Text(
+        "Profile View",
+        style: TextStyle(
+            fontFamily: 'PostNoBillsColombo',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black),
+      ),
+    );
+  }
 }
