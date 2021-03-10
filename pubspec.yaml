@@ -51,3 +51,6 @@ flutter:
     - family: Nunito
       fonts:
         - asset: assets/fonts/Nunito-Bold.ttf
+    - family: PostNoBillsColombo
+      fonts:
+        - asset: assets/fonts/PostNoBillsColombo-SemiBold.ttf

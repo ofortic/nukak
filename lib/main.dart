@@ -1,4 +1,5 @@
-import 'package:nukak/view/HomeView.dart';
+import 'package:nukak/root_app.dart';
+import 'package:nukak/view/home/HomeView.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,12 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(fontFamily: "Nunito"),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
-          child: HomeView(),
+          child: RootApp(),
         ),
       ),
     );
