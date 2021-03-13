@@ -32,6 +32,7 @@ class _RootAppState extends State<RootApp> {
   Widget getAppBar() {
     if (pageIndex == 1) {
       return AppBar(
+        elevation: 0,
         backgroundColor: Color(0xFFE4D5C2),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
