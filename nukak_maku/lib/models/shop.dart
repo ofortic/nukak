@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Shop {
-  String id;
+  String id, userId;
   String name;
   String description;
 
@@ -9,6 +9,9 @@ class Shop {
       : id = doc.documentID,
         name = doc.data['name'],
         description = doc.data['description'];
+  Map<String, dynamic> toFirestore() =>
+      {'name': name, 'description': description};
+  Shop(this.name, this.description);
 }
 
 List<Shop> toShopList(QuerySnapshot query) {
