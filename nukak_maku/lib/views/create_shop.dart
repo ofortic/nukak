@@ -1,15 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nukak_maku/db.dart' as db;
 import 'package:nukak_maku/models/shop.dart';
+import 'package:provider/provider.dart';
 
 class CreateShopView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User>();
     return Scaffold(
         appBar: AppBar(title: Text('new shop')),
         body: NewShopForm(onSend: (nameText, descriptionText) {
           print(nameText);
-          db.sendShop(Shop(nameText, descriptionText));
+          try {
+            db.sendShop(Shop(nameText, firebaseUser.uid, descriptionText));
+          } on Exception catch (_) {
+            print('never');
+          }
         }));
   }
 }

@@ -1,17 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nukak_maku/db.dart' as db;
 import 'package:nukak_maku/models/product.dart';
 import 'package:nukak_maku/models/shop.dart';
+import 'package:provider/provider.dart';
 
 class CreateProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User>();
     final Shop shop = ModalRoute.of(context).settings.arguments;
     return Scaffold(
         appBar: AppBar(title: Text(shop.name)),
         body: NewProductForm(onSend: (nameText, descriptionText) {
-          print(nameText);
-          db.sendProduct(shop.id, Product(nameText, descriptionText));
+          db.sendProduct(shop.id,
+              Product(nameText, firebaseUser.uid, shop.id, descriptionText));
         }));
   }
 }

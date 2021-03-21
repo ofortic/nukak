@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:nukak_maku/authentication_service.dart';
 import 'package:nukak_maku/db.dart' as db;
 import 'package:nukak_maku/models/shop.dart';
 import 'package:nukak_maku/widgets/loading_circle.dart';
 import 'package:nukak_maku/widgets/shop_list.dart';
 import 'package:nukak_maku/widgets/snerror.dart';
+import 'package:provider/provider.dart';
 
 class ShopsView extends StatelessWidget {
   @override
@@ -28,6 +30,15 @@ class ShopsView extends StatelessWidget {
                   icon: Icon(Icons.add_circle),
                   onPressed: () =>
                       Navigator.of(context).pushNamed('/create_shop'),
+                ),
+                IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () => Navigator.of(context).pushNamed('/chats'),
+                ),
+                IconButton(
+                  icon: Icon(Icons.logout),
+                  onPressed: () =>
+                      context.read<AuthenticationService>().signOut(),
                 ),
               ],
             );
