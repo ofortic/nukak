@@ -91,7 +91,10 @@ class _RootAppState extends State<RootApp> {
     return Container(
       width: double.infinity,
       height: 55,
-      decoration: BoxDecoration(color: Color(0xFF979797)),
+      decoration: BoxDecoration(
+          color: Color(0xFF979797),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10), topRight: Radius.circular(10))),
       child: Padding(
         padding:
             const EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 15),
