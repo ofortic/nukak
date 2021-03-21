@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nukak/view/favorites/FavoriteView.dart';
 import 'package:nukak/view/profile/ProfileView.dart';
+import 'package:nukak/view/profile/ProfileViewLogin.dart';
 import 'home/HomeView.dart';
+import 'market/MarketView.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -22,7 +24,7 @@ class _RootAppState extends State<RootApp> {
   }
 
   Widget getBody() {
-    List<Widget> views = [ProfileView(), HomeView(), FavoriteView()];
+    List<Widget> views = [ProfileViewLogin(), HomeView(), FavoriteView()];
     return IndexedStack(
       index: pageIndex,
       children: views,
@@ -46,19 +48,19 @@ class _RootAppState extends State<RootApp> {
         ),
       );
     } else if (pageIndex == 0) {
-      return AppBar(
+      /* return AppBar(
         backgroundColor: Color(0xFFE4D5C2),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("Perfil",
+            Text("Login",
                 style: TextStyle(
                     fontFamily: 'PostNoBillsColombo',
                     color: Colors.black,
                     fontSize: 36))
           ],
         ),
-      );
+      ); */
     } else {
       return AppBar(
         backgroundColor: Color(0xFFE4D5C2),
