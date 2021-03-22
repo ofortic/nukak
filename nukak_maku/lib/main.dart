@@ -9,6 +9,9 @@ import 'package:nukak_maku/views/messages_view.dart';
 import 'package:nukak_maku/views/product_view.dart';
 import 'package:nukak_maku/views/products_view.dart';
 import 'package:nukak_maku/views/request_view.dart';
+import 'package:nukak_maku/views/requests_view.dart';
+import 'package:nukak_maku/views/reports_view.dart';
+import 'package:nukak_maku/views/favourites_view.dart';
 import 'package:nukak_maku/views/shop_view.dart';
 import 'package:nukak_maku/views/sign_in.dart';
 import 'package:nukak_maku/views/sign_up.dart';
@@ -70,6 +73,9 @@ class MyApp extends StatelessWidget {
             '/create_product': (_) => CreateProductView(),
             '/create_shop': (_) => CreateShopView(),
             '/chats': (_) => ChatsView(),
+            '/favourites': (_) => FavouritesView(),
+            '/reports': (_) => ReportsView(),
+            '/requests': (_) => RequestsView(),
             '/messages': (_) => MessagesView(),
             '/request': (_) => CreateRequestView(),
             '/sign_up': (_) => SignUpView(),
