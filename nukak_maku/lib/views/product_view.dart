@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:nukak_maku/db.dart' as db;
 import 'package:nukak_maku/models/chat.dart';
 import 'package:nukak_maku/models/product.dart';
+import 'package:nukak_maku/models/favourite.dart';
+import 'package:nukak_maku/models/report.dart';
 import 'package:provider/provider.dart';
 
 class ProductView extends StatelessWidget {
@@ -10,6 +12,7 @@ class ProductView extends StatelessWidget {
   Widget build(BuildContext context) {
     final Product product = ModalRoute.of(context).settings.arguments;
     final firebaseUser = context.watch<User>();
+    final tec= TextEditingController();
     return Scaffold(
         appBar: AppBar(title: Text(product.name)),
         body: new Container(
@@ -47,6 +50,25 @@ class ProductView extends StatelessWidget {
                   child: Text('Contact Craftsman'),
                   onPressed: () {
                     db.sendChat(Chat(product.userId, firebaseUser.uid));
+                  },
+                ),
+              ),
+              new Container(
+                child: ElevatedButton(
+                  child: Text('Favourite'),
+                  onPressed: () {
+                    db.sendFavourite(firebaseUser.uid,Favourite(firebaseUser.uid, product.id));
+                  },
+                ),
+              ),
+              new TextField(
+                controller: tec,
+              ),
+              new Container(
+                child: ElevatedButton(
+                  child: Text('Report'),
+                  onPressed: () {
+                    db.sendReport(firebaseUser.uid,Report(firebaseUser.uid, product.userId,tec.text));
                   },
                 ),
               ),

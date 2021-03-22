@@ -36,6 +36,10 @@ class ShopsView extends StatelessWidget {
                   onPressed: () => Navigator.of(context).pushNamed('/chats'),
                 ),
                 IconButton(
+                  icon: Icon(Icons.add_link),
+                  onPressed: () => Navigator.of(context).pushNamed('/request'),
+                ),
+                IconButton(
                   icon: Icon(Icons.logout),
                   onPressed: () =>
                       context.read<AuthenticationService>().signOut(),
