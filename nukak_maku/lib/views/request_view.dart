@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nukak_maku/db.dart' as db;
-import 'package:nukak_maku/models/shop.dart';
 
 import 'package:nukak_maku/models/request.dart';
 import 'package:provider/provider.dart';
@@ -10,12 +9,10 @@ class CreateRequestView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
-    final Shop shop = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-        appBar: AppBar(title: Text(shop.name)),
-        body: NewRequestForm(onSend: ( descriptionText) {
-          db.sendRequest(shop.id,
-              Request( firebaseUser.uid,  descriptionText));
+        appBar: AppBar(title: Text('new request')),
+        body: NewRequestForm(onSend: (descriptionText) {
+          db.sendRequest(Request(firebaseUser.uid, descriptionText));
         }));
   }
 }
@@ -51,7 +48,6 @@ class NewRequestFormState extends State<NewRequestForm> {
       ),
       body: Column(
         children: <Widget>[
-          
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
@@ -66,7 +62,7 @@ class NewRequestFormState extends State<NewRequestForm> {
         onPressed: () {
           final String descriptionText = descriptionController.text;
 
-          widget.onSend( descriptionText);
+          widget.onSend(descriptionText);
         },
         tooltip: 'Show me the value!',
         child: Icon(Icons.text_fields),

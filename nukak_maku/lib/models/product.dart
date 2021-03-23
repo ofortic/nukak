@@ -6,6 +6,7 @@ class Product {
   String description;
   bool active;
   DateTime datetime;
+  String url;
 
   Product.fromFirestore(DocumentSnapshot doc)
       : id = doc.id,
@@ -14,6 +15,7 @@ class Product {
         name = doc.data()['name'],
         description = doc.data()['description'],
         active = doc.data()['active'],
+        url = doc.data()['url'],
         datetime = (doc.data()['datetime'] as Timestamp).toDate();
   Map<String, dynamic> toFirestore() => {
         'userId': userId,
@@ -21,9 +23,10 @@ class Product {
         'name': name,
         'description': description,
         'active': active,
-        'datetime': datetime
+        'datetime': datetime,
+        'url': url
       };
-  Product(this.name, this.userId, this.shopId, this.description)
+  Product(this.name, this.userId, this.shopId, this.description, this.url)
       : datetime = DateTime.now(),
         active = true;
 }

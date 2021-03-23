@@ -4,21 +4,26 @@ class Request {
   String id, userId, reason;
   bool approved;
   DateTime datetime;
+  String url;
 
   Request.fromFirestore(DocumentSnapshot doc)
       : id = doc.id,
         userId = doc.data()['userId'],
         reason = doc.data()['reason'],
         approved = doc.data()['approved'],
+        url = doc.data()['url'],
         datetime = (doc.data()['datetime'] as Timestamp).toDate();
   Map<String, dynamic> toFirestore() => {
         'userId': userId,
         'reason': reason,
         'approved': approved,
-        'datetime': datetime
+        'datetime': datetime,
+        'url': url,
       };
-  Request( this.userId, this.reason)
-      : datetime = DateTime.now(), approved=false;
+  Request(this.userId, this.reason)
+      : datetime = DateTime.now(),
+        url = "none",
+        approved = false;
 }
 
 List<Request> toRequestList(QuerySnapshot query) {

@@ -12,7 +12,8 @@ class ProductView extends StatelessWidget {
   Widget build(BuildContext context) {
     final Product product = ModalRoute.of(context).settings.arguments;
     final firebaseUser = context.watch<User>();
-    final tec= TextEditingController();
+    final tec = TextEditingController();
+
     return Scaffold(
         appBar: AppBar(title: Text(product.name)),
         body: new Container(
@@ -46,6 +47,10 @@ class ProductView extends StatelessWidget {
                 ),
               ),
               new Container(
+                  child: Center(
+                      child:
+                          Image.network(product.url, height: 100, width: 100))),
+              new Container(
                 child: ElevatedButton(
                   child: Text('Contact Craftsman'),
                   onPressed: () {
@@ -57,7 +62,8 @@ class ProductView extends StatelessWidget {
                 child: ElevatedButton(
                   child: Text('Favourite'),
                   onPressed: () {
-                    db.sendFavourite(firebaseUser.uid,Favourite(firebaseUser.uid, product.id));
+                    db.sendFavourite(firebaseUser.uid,
+                        Favourite(firebaseUser.uid, product.id));
                   },
                 ),
               ),
@@ -68,7 +74,8 @@ class ProductView extends StatelessWidget {
                 child: ElevatedButton(
                   child: Text('Report'),
                   onPressed: () {
-                    db.sendReport(firebaseUser.uid,Report(firebaseUser.uid, product.userId,tec.text));
+                    db.sendReport(
+                        Report(firebaseUser.uid, product.userId, tec.text));
                   },
                 ),
               ),

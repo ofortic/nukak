@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:nukak_maku/authentication_service.dart';
+import 'package:nukak_maku/storage_service.dart';
 import 'package:nukak_maku/views/chats_view.dart';
 import 'package:nukak_maku/views/create_product.dart';
 import 'package:nukak_maku/views/create_shop.dart';
@@ -55,6 +57,9 @@ class MyApp extends StatelessWidget {
         providers: [
           Provider<AuthenticationService>(
             create: (_) => AuthenticationService(FirebaseAuth.instance),
+          ),
+          Provider<StorageService>(
+            create: (_) => StorageService(FirebaseStorage.instance),
           ),
           StreamProvider(
             create: (context) =>

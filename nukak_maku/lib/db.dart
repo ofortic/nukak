@@ -17,6 +17,7 @@ Stream<List<Shop>> getShops() {
       .snapshots()
       .map(toShopList);
 }
+
 // GET ALL OF MY SHOPS
 Stream<List<Shop>> getMyShops(String user) {
   return FirebaseFirestore.instance
@@ -25,6 +26,7 @@ Stream<List<Shop>> getMyShops(String user) {
       .snapshots()
       .map(toShopList);
 }
+
 // CREATE NEW SHOP
 Future<void> sendShop(Shop sh) async {
   await FirebaseFirestore.instance
@@ -34,6 +36,7 @@ Future<void> sendShop(Shop sh) async {
     print(e.toString());
   });
 }
+
 //DELETE A SHOP
 Future<void> deleteShop(Shop sh) async {
   await FirebaseFirestore.instance.collection('/shops').doc(sh.id).delete();
@@ -47,6 +50,7 @@ Stream<List<Product>> getShopProducts(String shopId) {
       .snapshots()
       .map(toProductList);
 }
+
 //CREATE NEW PRODUCT IN A SHOP
 Future<void> sendProduct(String shopId, Product pr) async {
   await FirebaseFirestore.instance
@@ -56,6 +60,7 @@ Future<void> sendProduct(String shopId, Product pr) async {
     print(e.toString());
   });
 }
+
 //DELETE A PRODUCT
 Future<void> deleteProduct(String shopId, Product pr) async {
   await FirebaseFirestore.instance
@@ -73,6 +78,7 @@ Stream<List<Chat>> getMyChats(String user) {
       .snapshots()
       .map(toChatList);
 }
+
 //GET MY CHATS IF IM A CRAFTSMAN
 Stream<List<Chat>> getMyCraftsmanChats(String user) {
   return FirebaseFirestore.instance
@@ -81,6 +87,7 @@ Stream<List<Chat>> getMyCraftsmanChats(String user) {
       .snapshots()
       .map(toChatList);
 }
+
 //CREATE NEW CHAT
 Future<void> sendChat(Chat ch) async {
   await FirebaseFirestore.instance
@@ -92,7 +99,7 @@ Future<void> sendChat(Chat ch) async {
 }
 //MESSAGES--------------------------------------------------
 
-//GET THE MESSAGES OF A CHAT 
+//GET THE MESSAGES OF A CHAT
 Stream<List<Message>> getMessages(String chatId) {
   return FirebaseFirestore.instance
       .collection('chats/$chatId/messages')
@@ -140,7 +147,7 @@ Stream<List<Report>> getReports() {
 }
 
 //CREATE A NEW REPORT
-Future<void> sendReport(String userId, Report re) async {
+Future<void> sendReport(Report re) async {
   await FirebaseFirestore.instance
       .collection('/reports')
       .add(re.toFirestore())
@@ -159,7 +166,7 @@ Stream<List<Request>> getRequest() {
 }
 
 //CREATE A NEW REQUEST
-Future<void> sendRequest(String userId, Request re) async {
+Future<void> sendRequest(Request re) async {
   await FirebaseFirestore.instance
       .collection('/requests')
       .add(re.toFirestore())

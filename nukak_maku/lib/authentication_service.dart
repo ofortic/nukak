@@ -44,14 +44,16 @@ class UserParsing {
   final String userId;
   final String email;
   final String role;
+  final String url;
 
-  UserParsing({this.userId, this.email, this.role});
+  UserParsing({this.userId, this.email, this.role, this.url});
 
   factory UserParsing.fromJson(Map<String, dynamic> json) {
     return UserParsing(
       userId: json['userId'],
       email: json['email'],
       role: json['role'],
+      url: json['url'],
     );
   }
 }
@@ -71,6 +73,7 @@ class UserHelper {
       "email": user.email,
       "created_at": user.metadata.creationTime,
       "role": "user",
+      "url": "none",
     };
     final userRef = db.collection("users").doc(user.uid);
     if ((await userRef.get()).exists) {
