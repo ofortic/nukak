@@ -1,0 +1,180 @@
+import 'package:flutter/material.dart';
+import 'package:nukak/view/profile/Login/SignupView.dart';
+
+import '../../../constants.dart';
+
+class LoginView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/images/Background.png"),
+              fit: BoxFit.cover),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 0),
+              child: Image.asset(
+                "assets/images/logo2nukak.png",
+                height: 100,
+                width: 100,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 30),
+              child: Image.asset("assets/images/fondologin.png"),
+            ),
+            RoundedInputField(
+              hintText: "Correo electrónico",
+              onChanged: (value) {},
+            ),
+            RoundedPasswordField(
+              hintText: "Contraseña",
+              onChanged: (value) {},
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 20),
+              width: 150,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(29),
+                child: FlatButton(
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  color: kPrimaryColor,
+                  onPressed: () {},
+                  child: Text(
+                    "Ingresar",
+                    style: TextStyle(color: new Color.fromRGBO(0, 0, 0, 0.5)),
+                  ),
+                ),
+              ),
+            ),
+            AlreadyHaveAnAccountCheck(
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return SignupView();
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AlreadyHaveAnAccountCheck extends StatelessWidget {
+  final bool login;
+  final Function press;
+  const AlreadyHaveAnAccountCheck({
+    Key key,
+    this.login = true,
+    this.press,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(login ? "¿Aún no tienes cuenta?" : "¿Ya tienes cuenta?",
+            style: TextStyle(
+              color: new Color.fromRGBO(0, 0, 0, 1),
+              fontSize: 10,
+            )),
+        GestureDetector(
+          onTap: press,
+          child: Text(
+            login ? "  ¡Regístrate!" : "Ingresar",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class RoundedPasswordField extends StatelessWidget {
+  final ValueChanged<String> onChanged;
+  final String hintText;
+  const RoundedPasswordField({
+    Key key,
+    this.onChanged,
+    this.hintText,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFieldContainer(
+      child: TextField(
+        obscureText: true,
+        onChanged: onChanged,
+        decoration: InputDecoration(
+          hintText: hintText,
+          icon: Icon(Icons.lock),
+          suffixIcon: Icon(Icons.visibility),
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+}
+
+class RoundedInputField extends StatelessWidget {
+  final String hintText;
+  final IconData icon;
+  final ValueChanged<String> onChanged;
+  const RoundedInputField({
+    Key key,
+    this.hintText,
+    this.icon = Icons.person,
+    this.onChanged,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFieldContainer(
+      child: TextField(
+        onChanged: onChanged,
+        decoration: InputDecoration(
+          icon: Icon(
+            icon,
+          ),
+          border: InputBorder.none,
+          hintText: hintText,
+        ),
+      ),
+    );
+  }
+}
+
+class TextFieldContainer extends StatelessWidget {
+  final Widget child;
+  const TextFieldContainer({
+    Key key,
+    this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      width: size.width * 0.8,
+      decoration: BoxDecoration(
+        color: kPrimaryColor,
+        borderRadius: BorderRadius.circular(29),
+      ),
+      child: child,
+    );
+  }
+}
