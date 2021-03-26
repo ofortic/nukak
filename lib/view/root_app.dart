@@ -5,6 +5,7 @@ import 'package:nukak/view/profile/ProfileView.dart';
 import 'package:nukak/view/profile/ProfileViewLogin.dart';
 import 'home/HomeView.dart';
 import 'market/MarketView.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _RootAppState extends State<RootApp> {
   }
 
   Widget getBody() {
-    List<Widget> views = [ProfileViewLogin(), HomeView(), FavoriteView()];
+    List<Widget> views = [ProfileView(), HomeView(), FavoriteView()];
     return IndexedStack(
       index: pageIndex,
       children: views,
@@ -96,8 +97,8 @@ class _RootAppState extends State<RootApp> {
                 },
                 child: Image.asset(
                   bottomItems[index],
-                  width: 35,
-                  height: 35,
+                  width: 40,
+                  height: 40,
                 ),
               );
             })),

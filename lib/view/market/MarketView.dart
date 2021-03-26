@@ -9,7 +9,7 @@ class MarketView extends StatefulWidget {
 class _MarketViewState extends State<MarketView> {
   @override
   Widget build(BuildContext context) {
-    return getBodyTest();
+    return Container(child: getBodyTest(), color: Colors.white);
   }
 }
 
@@ -68,11 +68,13 @@ Widget getList() {
     child: Padding(
       padding: const EdgeInsets.only(left: 0, right: 0, top: 25, bottom: 5),
       child: ListView.separated(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
         itemBuilder: (_, index) => Center(
           child: marketCell(),
         ),
         separatorBuilder: (_, __) => Divider(),
-        itemCount: 2,
+        itemCount: 10,
       ),
     ),
   );

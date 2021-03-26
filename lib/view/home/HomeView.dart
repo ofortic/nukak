@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:nukak/view/market/MarketView.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -32,14 +33,13 @@ class _HomeViewState extends State<HomeView> {
           _showAppbar = false;
           setState(() {});
         }
-        if (_controller.position.userScrollDirection ==
-            ScrollDirection.forward) {
-          if (isScrollingDown) {
-            print('Scrolling up');
-            isScrollingDown = false;
-            _showAppbar = true;
-            setState(() {});
-          }
+      }
+      if (_controller.position.userScrollDirection == ScrollDirection.forward) {
+        if (isScrollingDown) {
+          print('Scrolling up');
+          isScrollingDown = false;
+          _showAppbar = true;
+          setState(() {});
         }
       }
     });
@@ -135,6 +135,8 @@ class _HomeViewState extends State<HomeView> {
   Widget marketCell() {
     return GestureDetector(
       onTap: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => MarketView()));
         print('Cell pressed');
       },
       child: Container(
