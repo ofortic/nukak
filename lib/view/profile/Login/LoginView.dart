@@ -1,11 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/profile/Login/SignupView.dart';
-
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
 class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String us;
+    String con;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -30,11 +34,15 @@ class LoginView extends StatelessWidget {
             ),
             RoundedInputField(
               hintText: "Correo electrónico",
-              onChanged: (value) {},
+              onChanged: (value) {
+                us = value;
+              },
             ),
             RoundedPasswordField(
               hintText: "Contraseña",
-              onChanged: (value) {},
+              onChanged: (value) {
+                con = value;
+              },
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 20),
@@ -44,7 +52,15 @@ class LoginView extends StatelessWidget {
                 child: FlatButton(
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                   color: kPrimaryColor,
-                  onPressed: () {},
+                  onPressed: () {
+                    context
+                        .read<AuthenticationService>()
+                        .signIn(
+                          email: us,
+                          password: con,
+                        )
+                        .then((value) => print(value));
+                  },
                   child: Text(
                     "Ingresar",
                     style: TextStyle(color: new Color.fromRGBO(0, 0, 0, 0.5)),

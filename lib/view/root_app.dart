@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/favorites/FavoriteView.dart';
 import 'package:nukak/view/profile/ProfileView.dart';
-import 'package:nukak/view/profile/ProfileViewLogin.dart';
 import 'home/HomeView.dart';
-import 'market/MarketView.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -93,7 +92,7 @@ class _RootAppState extends State<RootApp> {
             children: List.generate(3, (index) {
               return InkWell(
                 onTap: () {
-                  selectedTab(index);
+                  context.read<AuthenticationService>().signOut();
                 },
                 child: Image.asset(
                   bottomItems[index],

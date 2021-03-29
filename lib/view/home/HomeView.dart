@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:nukak/controller/db.dart' as db;
+import 'package:nukak/models/shop.dart';
+import 'package:nukak/view/home/snerror.dart';
 import 'package:nukak/view/market/MarketView.dart';
+
+import 'loading_circle.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -57,7 +62,18 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
         backgroundColor: Color(0xFFE4D5C2),
         appBar: animatedAppbar(),
-        body: getBodyTest());
+        body: StreamBuilder(
+          stream: db.getShops(),
+          builder: (context, AsyncSnapshot<List<Shop>> snapshot) {
+            if (snapshot.hasError) {
+              return SnapshotError(snapshot.error);
+            }
+            if (!snapshot.hasData) {
+              return Loading();
+            }
+            return getBody(snapshot.data);
+          },
+        ));
   }
 
   Widget animatedAppbar() {
@@ -102,37 +118,24 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget getBody() {
-    return Center(
-      child: Text(
-        "Home View",
-        style: TextStyle(
-            fontFamily: 'PostNoBillsColombo',
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black),
-      ),
-    );
-  }
-
-  Widget getBodyTest() {
+  Widget getBody(List<Shop> shops) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
         child: ListView.separated(
+          itemCount: shops.length,
           controller: _controller,
           physics: _physics,
-          itemBuilder: (_, index) => Center(
-            child: marketCell(),
+          itemBuilder: (context, index) => Center(
+            child: shopCell(shops[index]),
           ),
           separatorBuilder: (_, __) => Divider(),
-          itemCount: 5,
         ),
       ),
     );
   }
 
-  Widget marketCell() {
+  Widget shopCell(Shop sh) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
@@ -148,6 +151,7 @@ class _HomeViewState extends State<HomeView> {
             Column(
               children: <Widget>[
                 Container(
+                  child: Text(sh.description),
                   height: 130,
                   width: 220,
                   decoration: BoxDecoration(
