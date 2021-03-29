@@ -34,6 +34,12 @@ class SignInView extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
+              context.read<AuthenticationService>().signInWithGoogle();
+            },
+            child: Text("Sign in with google"),
+          ),
+          ElevatedButton(
+            onPressed: () {
               Navigator.of(context).pushNamed('/sign_up');
             },
             child: Text("Sign up"),
