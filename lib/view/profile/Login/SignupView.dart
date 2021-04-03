@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nukak/view/profile/Login/LoginView.dart';
 
 import '../../../constants.dart';
 
@@ -16,10 +17,22 @@ class SignupView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.symmetric(vertical: 0),
+              margin: EdgeInsets.symmetric(vertical: 40),
               child: Image.asset(
                 "assets/images/logonukak.png",
               ),
+            ),
+            RoundedInputField(
+              hintText: "Nombres y Apellidos",
+            ),
+            RoundedInputField(
+              hintText: "Correo electrónico",
+            ),
+            RoundedPasswordField(
+              hintText: "Contraseña",
+            ),
+            RoundedPasswordField(
+              hintText: "Confirma contraseña",
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 10),
@@ -31,11 +44,23 @@ class SignupView extends StatelessWidget {
                   color: kPrimaryColor,
                   onPressed: () {},
                   child: Text(
-                    "Ingresar",
+                    "Registrarme",
                     style: TextStyle(color: new Color.fromRGBO(0, 0, 0, 0.5)),
                   ),
                 ),
               ),
+            ),
+            AlreadyHaveAnAccountCheck(
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return LoginView();
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),
