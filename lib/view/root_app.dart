@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nukak/view/favorites/FavoriteView.dart';
 import 'package:nukak/view/profile/ProfileView.dart';
 import 'package:nukak/view/profile/ProfileViewLogin.dart';
+import 'package:nukak/view/profile/ProfileViewEdit.dart';
 import 'home/HomeView.dart';
 import 'market/MarketView.dart';
 
@@ -24,7 +25,7 @@ class _RootAppState extends State<RootApp> {
   }
 
   Widget getBody() {
-    List<Widget> views = [ProfileViewLogin(), HomeView(), FavoriteView()];
+    List<Widget> views = [ProfileView(), HomeView(), FavoriteView()];
     return IndexedStack(
       index: pageIndex,
       children: views,

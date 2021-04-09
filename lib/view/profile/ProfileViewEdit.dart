@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProfileView extends StatefulWidget {
+class ProfileViewEdit extends StatefulWidget {
   @override
-  _ProfileViewState createState() => _ProfileViewState();
+  _ProfileViewEditState createState() => _ProfileViewEditState();
 }
 
-class _ProfileViewState extends State<ProfileView> {
+class _ProfileViewEditState extends State<ProfileViewEdit> {
   Widget textfield({@required String hintText}) {
     return Material(
       elevation: 4,
@@ -36,7 +36,7 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(20.0),
+        preferredSize: Size.fromHeight(2.0),
         child: AppBar(
           elevation: 0,
           backgroundColor: new Color.fromRGBO(111, 31, 10, 0.9),
@@ -49,23 +49,42 @@ class _ProfileViewState extends State<ProfileView> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                height: 280,
+                height: 450,
                 width: double.infinity,
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     textfield(
-                      hintText: "Barranquilla",
+                      hintText: "Nombres y Apellidos",
                     ),
                     textfield(
-                      hintText: "jjquevedo@uninorte.edu.co",
+                      hintText: "Ciudad",
                     ),
                     textfield(
-                      hintText: "301 388 3909",
+                      hintText: "Correo electrónico",
                     ),
                     textfield(
-                      hintText: "02/07/1999",
+                      hintText: "Teléfono de contacto",
+                    ),
+                    textfield(
+                      hintText: "Fecha de nacimiento",
+                    ),
+                    Container(
+                      width: double.infinity,
+                      child: RaisedButton(
+                        onPressed: () {},
+                        color: new Color.fromRGBO(111, 31, 10, 0.9),
+                        child: Center(
+                          child: Text(
+                            "Actualizar",
+                            style: TextStyle(
+                              fontSize: 23,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -85,9 +104,9 @@ class _ProfileViewState extends State<ProfileView> {
               Padding(
                 padding: EdgeInsets.all(20),
                 child: Text(
-                  "Jairo Quevedo Caballero",
+                  "Editar perfil",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 10,
                     letterSpacing: 1.5,
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
@@ -96,8 +115,8 @@ class _ProfileViewState extends State<ProfileView> {
               ),
               Container(
                 padding: EdgeInsets.all(10.0),
-                width: MediaQuery.of(context).size.width / 2.5,
-                height: MediaQuery.of(context).size.width / 2.5,
+                width: MediaQuery.of(context).size.width / 4,
+                height: MediaQuery.of(context).size.width / 4,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white, width: 5),
                   shape: BoxShape.circle,
@@ -110,6 +129,17 @@ class _ProfileViewState extends State<ProfileView> {
               ),
             ],
           ),
+          Padding(padding: EdgeInsets.only(bottom: 270, left: 184)),
+          CircleAvatar(
+            backgroundColor: Colors.black54,
+            child: IconButton(
+              icon: Icon(
+                Icons.edit,
+                color: Colors.white,
+              ),
+              onPressed: () {},
+            ),
+          ),
         ],
       ),
     );
@@ -121,8 +151,8 @@ class HeaderCurvedContainer extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()..color = new Color.fromRGBO(111, 31, 10, 0.9);
     Path path = Path()
-      ..relativeLineTo(0, 150)
-      ..quadraticBezierTo(size.width / 2, 225, size.width, 150)
+      ..relativeLineTo(0, 30)
+      ..quadraticBezierTo(size.width / 2, 225, size.width, 30)
       ..relativeLineTo(0, -150)
       ..close();
     canvas.drawPath(path, paint);
