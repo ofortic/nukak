@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/favorites/FavoriteView.dart';
 import 'package:nukak/view/profile/ProfileView.dart';
 import 'package:nukak/view/profile/ProfileViewLogin.dart';
 import 'package:nukak/view/profile/ProfileViewEdit.dart';
 import 'home/HomeView.dart';
-import 'market/MarketView.dart';
+import 'package:provider/provider.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -34,20 +35,7 @@ class _RootAppState extends State<RootApp> {
 
   Widget getAppBar() {
     if (pageIndex == 1) {
-      return AppBar(
-        elevation: 0,
-        backgroundColor: Color(0xFFE4D5C2),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Nukak",
-                style: TextStyle(
-                    fontFamily: 'PostNoBillsColombo',
-                    color: Colors.black,
-                    fontSize: 36))
-          ],
-        ),
-      );
+      return null;
     } else if (pageIndex == 0) {
       /* return AppBar(
         backgroundColor: Color(0xFFE4D5C2),
@@ -93,22 +81,25 @@ class _RootAppState extends State<RootApp> {
     ];
     return Container(
       width: double.infinity,
-      height: 55,
-      decoration: BoxDecoration(color: Color(0xFF979797)),
+      height: 60,
+      decoration: BoxDecoration(
+          color: Color(0xFF979797),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10), topRight: Radius.circular(10))),
       child: Padding(
         padding:
-            const EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 15),
+            const EdgeInsets.only(left: 25, right: 25, bottom: 20, top: 15),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(3, (index) {
               return InkWell(
                 onTap: () {
-                  selectedTab(index);
+                  context.read<AuthenticationService>().signOut();
                 },
                 child: Image.asset(
                   bottomItems[index],
-                  width: 25,
-                  height: 25,
+                  width: 40,
+                  height: 40,
                 ),
               );
             })),
