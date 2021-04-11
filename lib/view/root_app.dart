@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/favorites/FavoriteView.dart';
 import 'package:nukak/view/profile/ProfileView.dart';
+import 'package:nukak/view/profile/ProfileViewLogin.dart';
+import 'package:nukak/view/profile/ProfileViewEdit.dart';
 import 'home/HomeView.dart';
 import 'package:provider/provider.dart';
 
