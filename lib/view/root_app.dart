@@ -94,7 +94,13 @@ class _RootAppState extends State<RootApp> {
             children: List.generate(3, (index) {
               return InkWell(
                 onTap: () {
-                  context.read<AuthenticationService>().signOut();
+                  if (index == 2) {
+                    context.read<AuthenticationService>().signOut();
+                  } else if (index == 0) {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => ProfileView()));
+                    print('Cell pressed');
+                  }
                 },
                 child: Image.asset(
                   bottomItems[index],

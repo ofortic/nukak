@@ -138,8 +138,10 @@ class _HomeViewState extends State<HomeView> {
   Widget shopCell(Shop sh) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => MarketView()));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => MarketView(
+                  shop: sh,
+                )));
         print('Cell pressed');
       },
       child: Container(

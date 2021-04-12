@@ -80,7 +80,12 @@ class LoginView extends StatelessWidget {
                 ),
                 SocialIcon(
                   iconSrt: "assets/images/google.png",
-                  press: () {},
+                  press: () {
+                    context
+                        .read<AuthenticationService>()
+                        .signInWithGoogle()
+                        .then((value) => print(value));
+                  },
                 ),
               ],
             ),

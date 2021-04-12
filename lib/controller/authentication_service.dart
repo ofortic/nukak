@@ -67,16 +67,32 @@ class UserParsing {
   final String userId;
   final String email;
   final String role;
+  final String name;
   final String url;
+  final String date_of_birth;
+  final String tel;
+  final String city;
 
-  UserParsing({this.userId, this.email, this.role, this.url});
+  UserParsing(
+      {this.userId,
+      this.email,
+      this.role,
+      this.name,
+      this.url,
+      this.date_of_birth,
+      this.tel,
+      this.city});
 
   factory UserParsing.fromJson(Map<String, dynamic> json) {
     return UserParsing(
       userId: json['userId'],
       email: json['email'],
       role: json['role'],
+      name: json['name'],
       url: json['url'],
+      date_of_birth: json['date_of_birth'],
+      tel: json['tel'],
+      city: json['city'],
     );
   }
 }
@@ -84,7 +100,7 @@ class UserParsing {
 class UserHelper {
   static FirebaseFirestore db = FirebaseFirestore.instance;
 
-  static Future<UserParsing> getUserRole(User user) async {
+  static Future<UserParsing> getUser(User user) async {
     final userRef = db.collection("users").doc(user.uid);
     final us = await userRef.get();
     return UserParsing.fromJson(us.data());
@@ -97,6 +113,9 @@ class UserHelper {
       "created_at": user.metadata.creationTime,
       "role": "user",
       "url": "none",
+      "date_of_birth": "none",
+      "tel": "none",
+      "city": "none",
     };
     final userRef = db.collection("users").doc(user.uid);
     if ((await userRef.get()).exists) {

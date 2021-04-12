@@ -4,6 +4,7 @@ class Shop {
   String id, userId;
   String name;
   String description;
+  String url;
   bool active;
 
   Shop.fromFirestore(DocumentSnapshot doc)
@@ -11,14 +12,18 @@ class Shop {
         name = doc.data()['name'],
         userId = doc.data()['userId'],
         description = doc.data()['description'],
+        url = doc.data()['url'],
         active = doc.data()['active'];
   Map<String, dynamic> toFirestore() => {
         'userId': userId,
         'name': name,
         'active': active,
+        'url': url,
         'description': description
       };
-  Shop(this.name, this.userId, this.description) : active = true;
+  Shop(this.name, this.userId, this.description)
+      : url = 'none',
+        active = true;
 }
 
 List<Shop> toShopList(QuerySnapshot query) {
