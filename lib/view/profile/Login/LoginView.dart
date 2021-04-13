@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nukak/controller/authentication_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:nukak/view/profile/Login/SignupView.dart';
 import 'package:provider/provider.dart';
 import '../../../constants.dart';
@@ -69,6 +68,34 @@ class LoginView extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "¿No tienes una cuenta?",
+                  style: TextStyle(color: new Color.fromRGBO(0, 0, 0, 0.5)),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SignupView();
+                        },
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "¡Registrate!",
+                    style: TextStyle(
+                      color: new Color.fromRGBO(0, 0, 0, 0.5),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
             OrDivider(),
             Row(
