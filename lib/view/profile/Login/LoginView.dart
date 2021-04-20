@@ -1,11 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/controller/authentication_service.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nukak/view/profile/Login/SignupView.dart';
-
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
 class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String us;
+    String con;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -30,11 +35,15 @@ class LoginView extends StatelessWidget {
             ),
             RoundedInputField(
               hintText: "Correo electrónico",
-              onChanged: (value) {},
+              onChanged: (value) {
+                us = value;
+              },
             ),
             RoundedPasswordField(
               hintText: "Contraseña",
-              onChanged: (value) {},
+              onChanged: (value) {
+                con = value;
+              },
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 20),
@@ -44,7 +53,15 @@ class LoginView extends StatelessWidget {
                 child: FlatButton(
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                   color: kPrimaryColor,
-                  onPressed: () {},
+                  onPressed: () {
+                    context
+                        .read<AuthenticationService>()
+                        .signIn(
+                          email: us,
+                          password: con,
+                        )
+                        .then((value) => print(value));
+                  },
                   child: Text(
                     "Ingresar",
                     style: TextStyle(color: new Color.fromRGBO(0, 0, 0, 0.5)),
@@ -52,20 +69,119 @@ class LoginView extends StatelessWidget {
                 ),
               ),
             ),
-            AlreadyHaveAnAccountCheck(
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return SignupView();
-                    },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "¿No tienes una cuenta?",
+                  style: TextStyle(color: new Color.fromRGBO(0, 0, 0, 0.5)),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SignupView();
+                        },
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "¡Registrate!",
+                    style: TextStyle(
+                      color: new Color.fromRGBO(0, 0, 0, 0.5),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                );
-              },
+                ),
+              ],
+            ),
+            OrDivider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SocialIcon(
+                  iconSrt: "assets/images/facebook.png",
+                  press: () {},
+                ),
+                SocialIcon(
+                  iconSrt: "assets/images/google.png",
+                  press: () {
+                    context
+                        .read<AuthenticationService>()
+                        .signInWithGoogle()
+                        .then((value) => print(value));
+                  },
+                ),
+              ],
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class SocialIcon extends StatelessWidget {
+  final String iconSrt;
+  final Function press;
+  const SocialIcon({
+    Key key,
+    this.iconSrt,
+    this.press,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: press,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: kPrimaryColor,
+          ),
+          shape: BoxShape.circle,
+        ),
+        child: Image.asset(iconSrt, height: 20, width: 20),
+      ),
+    );
+  }
+}
+
+class OrDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      width: size.width * 0.8,
+      child: Row(
+        children: <Widget>[
+          buildDivider(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              "O ingresa con",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          buildDivider(),
+        ],
+      ),
+    );
+  }
+
+  Expanded buildDivider() {
+    return Expanded(
+      child: Divider(
+        color: new Color.fromRGBO(0, 0, 0, 1),
+        height: 1.5,
       ),
     );
   }
@@ -85,7 +201,7 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(login ? "¿Aún no tienes cuenta?" : "¿Ya tienes cuenta?",
+        Text(login ? "¿Ya tienes una cuenta?" : "¿Ya tienes cuenta?",
             style: TextStyle(
               color: new Color.fromRGBO(0, 0, 0, 1),
               fontSize: 10,
@@ -93,7 +209,7 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
         GestureDetector(
           onTap: press,
           child: Text(
-            login ? "  ¡Regístrate!" : "Ingresar",
+            login ? "  Ingresar" : "Ingresar",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),

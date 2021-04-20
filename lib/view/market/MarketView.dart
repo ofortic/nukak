@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/models/product.dart';
+import 'package:nukak/models/shop.dart';
 
-class MarketView extends StatefulWidget {
-  @override
-  _MarketViewState createState() => _MarketViewState();
-}
+import 'package:nukak/controller/db.dart' as db;
+import 'package:nukak/view/home/loading_circle.dart';
+import 'package:nukak/view/home/snerror.dart';
 
-class _MarketViewState extends State<MarketView> {
+class MarketView extends StatelessWidget {
+  final Shop shop;
+
+  // In the constructor, require a Todo.
+  MarketView({Key key, @required this.shop}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(child: getBodyTest(), color: Colors.white);
+    return Container(child: getBodyTest(context, shop), color: Colors.white);
   }
 }
 
@@ -32,27 +37,39 @@ class CirclePainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
-Widget getBodyTest() {
+Widget getBodyTest(BuildContext context, Shop shop) {
   return Column(
-    children: <Widget>[getProfilePhoto(), getDescription(), getList()],
+    children: <Widget>[
+      getAppBarHome(),
+      getProfilePhoto(context, shop),
+      getDescription(shop),
+      getList(shop)
+    ],
   );
 }
 
-Widget getProfilePhoto() {
-  return Center(
-    child: Padding(
-      padding: const EdgeInsets.only(left: 0, right: 0, top: 25, bottom: 5),
-      child: _buildCircle(),
+Widget getProfilePhoto(BuildContext context, Shop shop) {
+  return Container(
+    padding: EdgeInsets.all(10.0),
+    width: MediaQuery.of(context).size.width / 2.5,
+    height: MediaQuery.of(context).size.width / 2.5,
+    decoration: BoxDecoration(
+      border: Border.all(color: Colors.white, width: 5),
+      shape: BoxShape.circle,
+      color: Colors.white,
+      image: DecorationImage(
+        fit: BoxFit.cover,
+        image: NetworkImage(shop.url),
+      ),
     ),
   );
 }
 
-Widget getDescription() {
+Widget getDescription(Shop shop) {
   return Center(
     child: Padding(
       padding: const EdgeInsets.only(left: 0, right: 0, top: 25, bottom: 5),
-      child: Text(
-          "Esta es la descipción de la tienda que obtendrá toda la info, contacto, ubicación y demás",
+      child: Text(shop.description,
           style: TextStyle(
               fontFamily: 'PostNoBillsColombo',
               fontSize: 23,
@@ -63,20 +80,31 @@ Widget getDescription() {
   );
 }
 
-Widget getList() {
-  return Center(
-    child: Padding(
-      padding: const EdgeInsets.only(left: 0, right: 0, top: 25, bottom: 5),
-      child: ListView.separated(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemBuilder: (_, index) => Center(
-          child: marketCell(),
+Widget getList(Shop shop) {
+  return StreamBuilder(
+    stream: db.getShopProducts(shop.id),
+    builder: (context, AsyncSnapshot<List<Product>> snapshot) {
+      if (snapshot.hasError) {
+        return SnapshotError(snapshot.error);
+      }
+      if (!snapshot.hasData) {
+        return Loading();
+      }
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 0, right: 0, top: 25, bottom: 5),
+          child: ListView.separated(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemBuilder: (_, index) => Center(
+              child: marketCell(snapshot.data[index]),
+            ),
+            separatorBuilder: (_, __) => Divider(),
+            itemCount: snapshot.data.length,
+          ),
         ),
-        separatorBuilder: (_, __) => Divider(),
-        itemCount: 10,
-      ),
-    ),
+      );
+    },
   );
 }
 
@@ -90,7 +118,7 @@ Widget _buildCircle() {
   );
 }
 
-Widget marketCell() {
+Widget marketCell(Product p) {
   return Container(
     height: 200,
     width: 350,
@@ -106,6 +134,14 @@ Widget marketCell() {
                   color: Color(0xFF0CD1E5),
                   borderRadius:
                       BorderRadius.only(topLeft: Radius.circular(20))),
+              child: Text(
+                p.name,
+                style: TextStyle(
+                    fontFamily: 'PostNoBillsColombo',
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
             ),
             Container(
               height: 70,
@@ -139,5 +175,24 @@ Widget marketCell() {
         )
       ],
     ),
+  );
+}
+
+Widget getAppBarHome() {
+  return AppBar(
+    elevation: 0,
+    backgroundColor: Color(0xFFfc8300),
+    title: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("Nukak",
+            style: TextStyle(
+                fontFamily: 'PostNoBillsColombo',
+                color: Colors.black,
+                fontSize: 36))
+      ],
+    ),
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(15))),
   );
 }

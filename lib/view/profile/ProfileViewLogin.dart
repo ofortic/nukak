@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nukak/constants.dart';
 import 'package:nukak/view/profile/Login/LoginView.dart';
+import 'package:nukak/view/profile/Login/SignupView.dart';
 
 class ProfileViewLogin extends StatelessWidget {
   @override
@@ -62,7 +63,16 @@ class ProfileViewLogin extends StatelessWidget {
               child: FlatButton(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                 color: kPrimaryColor,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SignupView();
+                      },
+                    ),
+                  );
+                },
                 child: Text(
                   "Registrarse",
                   style: TextStyle(color: new Color.fromRGBO(111, 31, 10, 1)),
