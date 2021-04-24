@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nukak/controller/db.dart' as db;
 import 'package:nukak/models/shop.dart';
+import 'package:nukak/view/chat/screens/chats/chats_screen.dart';
 import 'package:nukak/view/home/snerror.dart';
 import 'package:nukak/view/market/MarketView.dart';
+import 'package:nukak/view/market/Product/ProductView.dart';
 
 import 'loading_circle.dart';
 
@@ -139,8 +141,8 @@ class _HomeViewState extends State<HomeView> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => MarketView(
-                  shop: sh,
+            builder: (context) => ChatsScreen(
+                //shop: sh,
                 )));
         print('Cell pressed');
       },
