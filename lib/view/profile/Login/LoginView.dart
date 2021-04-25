@@ -12,111 +12,113 @@ class LoginView extends StatelessWidget {
     String us;
     String con;
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/images/Background.png"),
-              fit: BoxFit.cover),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 0),
-              child: Image.asset(
-                "assets/images/logo2nukak.png",
-                height: 100,
-                width: 100,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 30),
-              child: Image.asset("assets/images/fondologin.png"),
-            ),
-            RoundedInputField(
-              hintText: "Correo electrónico",
-              onChanged: (value) {
-                us = value;
-              },
-            ),
-            RoundedPasswordField(
-              hintText: "Contraseña",
-              onChanged: (value) {
-                con = value;
-              },
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
-              width: 150,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(29),
-                child: FlatButton(
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                  color: kPrimaryColor,
-                  onPressed: () {
-                    context
-                        .read<AuthenticationService>()
-                        .signIn(
-                          email: us,
-                          password: con,
-                        )
-                        .then((value) => print(value));
-                  },
-                  child: Text(
-                    "Ingresar",
-                    style: TextStyle(color: new Color.fromRGBO(0, 0, 0, 0.5)),
-                  ),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/Background.png"),
+                fit: BoxFit.cover),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 18),
+                child: Image.asset(
+                  "assets/images/logo2nukak.png",
+                  height: 100,
+                  width: 100,
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "¿No tienes una cuenta?",
-                  style: TextStyle(color: new Color.fromRGBO(0, 0, 0, 0.5)),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return SignupView();
-                        },
-                      ),
-                    );
-                  },
-                  child: Text(
-                    "¡Registrate!",
-                    style: TextStyle(
-                      color: new Color.fromRGBO(0, 0, 0, 0.5),
-                      fontWeight: FontWeight.bold,
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: Image.asset("assets/images/fondologin.png"),
+              ),
+              RoundedInputField(
+                hintText: "Correo electrónico",
+                onChanged: (value) {
+                  us = value;
+                },
+              ),
+              RoundedPasswordField(
+                hintText: "Contraseña",
+                onChanged: (value) {
+                  con = value;
+                },
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                width: 200,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(29),
+                  child: FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                    color: kPrimaryColor,
+                    onPressed: () {
+                      context
+                          .read<AuthenticationService>()
+                          .signIn(
+                            email: us,
+                            password: con,
+                          )
+                          .then((value) => print(value));
+                    },
+                    child: Text(
+                      "Ingresar",
+                      style: TextStyle(color: new Color.fromRGBO(0, 0, 0, 0.5)),
                     ),
                   ),
                 ),
-              ],
-            ),
-            OrDivider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SocialIcon(
-                  iconSrt: "assets/images/facebook.png",
-                  press: () {},
-                ),
-                SocialIcon(
-                  iconSrt: "assets/images/google.png",
-                  press: () {
-                    context
-                        .read<AuthenticationService>()
-                        .signInWithGoogle()
-                        .then((value) => print(value));
-                  },
-                ),
-              ],
-            ),
-          ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "¿No tienes una cuenta?",
+                    style: TextStyle(color: new Color.fromRGBO(0, 0, 0, 0.5)),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return SignupView();
+                          },
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "¡Registrate!",
+                      style: TextStyle(
+                        color: new Color.fromRGBO(0, 0, 0, 0.5),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              OrDivider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SocialIcon(
+                    iconSrt: "assets/images/facebook.png",
+                    press: () {},
+                  ),
+                  SocialIcon(
+                    iconSrt: "assets/images/google.png",
+                    press: () {
+                      context
+                          .read<AuthenticationService>()
+                          .signInWithGoogle()
+                          .then((value) => print(value));
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

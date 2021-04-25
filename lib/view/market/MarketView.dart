@@ -38,13 +38,15 @@ class CirclePainter extends CustomPainter {
 }
 
 Widget getBodyTest(BuildContext context, Shop shop) {
-  return Column(
-    children: <Widget>[
-      getAppBarHome(),
-      getProfilePhoto(context, shop),
-      getDescription(shop),
-      getList(shop)
-    ],
+  return SingleChildScrollView(
+    child: Column(
+      children: <Widget>[
+        getAppBarHome(),
+        getProfilePhoto(context, shop),
+        getDescription(shop),
+        getList(shop)
+      ],
+    ),
   );
 }
 

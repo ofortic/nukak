@@ -17,6 +17,8 @@ class Product {
         active = doc.data()['active'],
         url = doc.data()['url'],
         datetime = (doc.data()['datetime'] as Timestamp).toDate();
+
+  get colors => null;
   Map<String, dynamic> toFirestore() => {
         'userId': userId,
         'shopId': shopId,
