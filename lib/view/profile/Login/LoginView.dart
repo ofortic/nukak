@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nukak/controller/authentication_service.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nukak/view/profile/Login/SignupView.dart';
 import 'package:provider/provider.dart';
 import '../../../constants.dart';
@@ -14,6 +13,7 @@ class LoginView extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
+          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/images/Background.png"),
@@ -23,15 +23,17 @@ class LoginView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                margin: EdgeInsets.symmetric(vertical: 18),
+                margin: EdgeInsets.symmetric(
+                    vertical: MediaQuery.of(context).size.height * 0.01),
                 child: Image.asset(
                   "assets/images/logo2nukak.png",
-                  height: 100,
-                  width: 100,
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  width: MediaQuery.of(context).size.width * 0.3,
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
+                height: MediaQuery.of(context).size.height * 0.2,
+                margin: EdgeInsets.symmetric(vertical: 0),
                 child: Image.asset("assets/images/fondologin.png"),
               ),
               RoundedInputField(
@@ -48,7 +50,7 @@ class LoginView extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
-                width: 200,
+                width: MediaQuery.of(context).size.width * 0.5,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(29),
                   child: FlatButton(

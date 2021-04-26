@@ -8,6 +8,7 @@ import 'package:nukak/view/home/snerror.dart';
 import 'package:nukak/view/market/MarketView.dart';
 import 'package:nukak/view/market/Product/ProductView.dart';
 
+import '../market/Product/ProductView.dart';
 import 'loading_circle.dart';
 
 class HomeView extends StatefulWidget {
@@ -141,7 +142,7 @@ class _HomeViewState extends State<HomeView> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ChatsScreen(
+            builder: (context) => ProductView(
                 //shop: sh,
                 )));
         print('Cell pressed');
