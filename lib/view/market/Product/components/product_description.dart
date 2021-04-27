@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nukak/models/Product.dart';
+import 'package:nukak/models/product.dart';
 
 import 'package:nukak/constants.dart';
 import 'package:nukak/view/sizeconfig.dart';
@@ -23,7 +23,7 @@ class ProductDescription extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               horizontal: 20), //getProportionateScreenWidth(20)),
           child: Text(
-            "Título del producto", //product.title,
+            product.name,
             style: Theme.of(context).textTheme.headline6,
           ),
         ),

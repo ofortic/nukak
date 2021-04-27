@@ -142,8 +142,8 @@ class _HomeViewState extends State<HomeView> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ProductView(
-                //shop: sh,
+            builder: (context) => MarketView(
+                  shop: sh,
                 )));
         print('Cell pressed');
       },

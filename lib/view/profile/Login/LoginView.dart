@@ -7,9 +7,9 @@ import '../../../constants.dart';
 
 class LoginView extends StatelessWidget {
   @override
+  String us;
+  String con;
   Widget build(BuildContext context) {
-    String us;
-    String con;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

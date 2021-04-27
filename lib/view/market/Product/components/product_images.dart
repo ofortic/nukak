@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:nukak/models/Product.dart';
+import 'package:nukak/models/product.dart';
 
 import 'package:nukak/constants.dart';
 import 'package:nukak/view/sizeconfig.dart';
 
-class ProductImages extends StatefulWidget {
-  const ProductImages({
+class ProductImages extends StatelessWidget {
+  ProductImages({
     Key key,
-    @required this.product,
+    @required this.urls,
   }) : super(key: key);
 
-  final Product product;
+  final String urls;
+  int selectedImage = 1;
 
-  @override
-  _ProductImagesState createState() => _ProductImagesState();
-}
-
-class _ProductImagesState extends State<ProductImages> {
-  int selectedImage = 0;
   @override
   Widget build(BuildContext context) {
+    List<String> images = urls.split(",");
     return Column(
       children: [
         SizedBox(
@@ -27,9 +23,9 @@ class _ProductImagesState extends State<ProductImages> {
           child: AspectRatio(
             aspectRatio: 1,
             child: Hero(
-              tag: widget.product.id.toString(),
-              child: Image.asset(
-                  "assets/images/logo2nukak.png"), //widget.product.images[selectedImage]),
+              tag: images[selectedImage],
+              child: Image.network(images[
+                  selectedImage]), //widget.product.images[selectedImage]),
             ),
           ),
         ),
@@ -48,9 +44,7 @@ class _ProductImagesState extends State<ProductImages> {
   GestureDetector buildSmallProductPreview(int index) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          selectedImage = index;
-        });
+        selectedImage = index;
       },
       child: AnimatedContainer(
         //duration: defaultDuration,
