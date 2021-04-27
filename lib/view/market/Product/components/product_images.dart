@@ -11,11 +11,12 @@ class ProductImages extends StatelessWidget {
   }) : super(key: key);
 
   final String urls;
-  int selectedImage = 1;
+  int selectedImage = 0;
 
   @override
   Widget build(BuildContext context) {
     List<String> images = urls.split(",");
+    int selectedImage = images.length - 1;
     return Column(
       children: [
         SizedBox(
@@ -33,15 +34,15 @@ class ProductImages extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //...List.generate(widget.product.images.length,
-            //  (index) => buildSmallProductPreview(index)),
+            ...List.generate(images.length - 1,
+                (index) => buildSmallProductPreview(images, index)),
           ],
         )
       ],
     );
   }
 
-  GestureDetector buildSmallProductPreview(int index) {
+  GestureDetector buildSmallProductPreview(List<String> images, int index) {
     return GestureDetector(
       onTap: () {
         selectedImage = index;
@@ -52,14 +53,14 @@ class ProductImages extends StatelessWidget {
         padding: EdgeInsets.all(8),
         height: 48, //getProportionateScreenWidth(48),
         width: 48, //getProportionateScreenWidth(48),
+        duration: Duration(seconds: 1),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
               color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        child: Image.asset(
-            "assets/images/logo2nukak.png"), //widget.product.images[index]),
+        child: Image.network(images[index]), //widget.product.images[index]),
       ),
     );
   }
