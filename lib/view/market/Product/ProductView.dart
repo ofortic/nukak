@@ -11,7 +11,7 @@ class ProductView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF5F6F9),
-      body: Body(product: product), //product: agrs.product),
+      body: Body(product: product),
     );
   }
 }

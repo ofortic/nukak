@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nukak/models/product.dart';
 
 import 'package:nukak/constants.dart';
-import 'package:nukak/view/sizeconfig.dart';
 
 class ProductDescription extends StatelessWidget {
   const ProductDescription({
@@ -21,7 +20,7 @@ class ProductDescription extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: 20), //getProportionateScreenWidth(20)),
+              horizontal: MediaQuery.of(context).size.width * 0.3),
           child: Text(
             product.name,
             style: Theme.of(context).textTheme.headline6,
@@ -30,8 +29,8 @@ class ProductDescription extends StatelessWidget {
         Align(
           alignment: Alignment.centerRight,
           child: Container(
-            padding: EdgeInsets.all(15), //getProportionateScreenWidth(15)),
-            width: 64, //getProportionateScreenWidth(64),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+            width: MediaQuery.of(context).size.width * 0.15,
             decoration: BoxDecoration(
               color:
                   //product.isFavourite ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
@@ -42,11 +41,12 @@ class ProductDescription extends StatelessWidget {
               ),
             ),
             child: Image.asset(
-              "assets/images/logo2nukak.png",
+              "assets/images/favorite.png",
               color:
                   //product.isFavourite ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
-                  kPrimaryColor,
-              height: 16, //getProportionateScreenWidth(16),
+                  Colors.white,
+              height: MediaQuery.of(context).size.height * 0.03,
+              width: MediaQuery.of(context).size.width * 0.7,
             ),
           ),
         ),

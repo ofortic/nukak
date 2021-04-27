@@ -27,18 +27,17 @@ class Body extends StatelessWidget {
                 color: Color(0xFFF6F7F9),
                 child: Column(
                   children: [
-                    //ColorDots(product: product),
                     TopRoundedContainer(
                       color: Colors.white,
                       child: Padding(
                         padding: EdgeInsets.only(
-                          left: 15, //SizeConfig.screenWidth * 0.15,
-                          right: 15, //SizeConfig.screenWidth * 0.15,
-                          bottom: 40, //getProportionateScreenWidth(40),
-                          top: 15, //getProportionateScreenWidth(15),
+                          left: MediaQuery.of(context).size.width * 0.07,
+                          right: MediaQuery.of(context).size.width * 0.07,
+                          bottom: MediaQuery.of(context).size.width * 0.05,
+                          top: 40,
                         ),
                         child: DefaultButton(
-                          text: "Añadir al carrito",
+                          text: "Chatear con el vendedor",
                           press: () {},
                         ),
                       ),
