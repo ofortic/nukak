@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class TopRoundedContainer extends StatelessWidget {
   const TopRoundedContainer({
     Key key,
-    @required this.color,
     @required this.child,
+    this.height,
   }) : super(key: key);
 
-  final Color color;
   final Widget child;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,8 @@ class TopRoundedContainer extends StatelessWidget {
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.05),
       padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.05),
       width: double.infinity,
+      height: height,
       decoration: BoxDecoration(
-        color: color,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
