@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:nukak/view/sizeconfig.dart';
-
 class RoundedIconBtn extends StatelessWidget {
   const RoundedIconBtn({
     Key key,

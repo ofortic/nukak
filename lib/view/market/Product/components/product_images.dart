@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nukak/models/product.dart';
 
 import 'package:nukak/constants.dart';
-import 'package:nukak/view/sizeconfig.dart';
 
 class ProductImages extends StatelessWidget {
   ProductImages({
@@ -20,17 +19,16 @@ class ProductImages extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: 238, //getProportionateScreenWidth(238),
+          width: MediaQuery.of(context).size.width * 0.7,
+          height: MediaQuery.of(context).size.height * 0.3,
           child: AspectRatio(
             aspectRatio: 1,
             child: Hero(
               tag: images[selectedImage],
-              child: Image.network(images[
-                  selectedImage]), //widget.product.images[selectedImage]),
+              child: Image.network(images[selectedImage]),
             ),
           ),
         ),
-        // SizedBox(height: getProportionateScreenWidth(20)),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
