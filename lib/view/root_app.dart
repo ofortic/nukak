@@ -98,17 +98,18 @@ class _RootAppState extends State<RootApp> {
               return InkWell(
                 onTap: () {
                   if (index == 2) {
-                    context.read<AuthenticationService>().signOut();
+                    selectedTab(index);
                   } else if (index == 0) {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ProfileView()));
+                    selectedTab(index);
                     print('Cell pressed');
+                  } else if (index == 1) {
+                    selectedTab(index);
                   }
                 },
                 child: Image.asset(
                   bottomItems[index],
-                  width: 40,
-                  height: 40,
+                  width: 70,
+                  height: 70,
                 ),
               );
             })),

@@ -7,6 +7,8 @@ import 'package:nukak/view/chat/screens/chats/chats_screen.dart';
 import 'package:nukak/view/home/snerror.dart';
 import 'package:nukak/view/market/MarketView.dart';
 import 'package:nukak/view/market/Product/ProductView.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'loading_circle.dart';
 
@@ -61,6 +63,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User>();
     return Scaffold(
         backgroundColor: Color(0xFFE4D5C2),
         appBar: animatedAppbar(),
@@ -121,15 +124,16 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget getBody(List<Shop> shops) {
+    print(shops.length);
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+        padding: const EdgeInsets.only(left: 0, right: 0, top: 20, bottom: 0),
         child: ListView.separated(
           itemCount: shops.length,
           controller: _controller,
           physics: _physics,
           itemBuilder: (context, index) => Center(
-            child: shopCell(shops[index]),
+            child: shopCellImage(shops[index]),
           ),
           separatorBuilder: (_, __) => Divider(),
         ),
@@ -206,6 +210,63 @@ class _HomeViewState extends State<HomeView> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget shopCellImage(Shop sh) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ChatsScreen(
+                //shop: sh,
+                )));
+        print('Cell pressed');
+      },
+      child: Column(
+        children: [
+          Container(
+            height: 280,
+            width: 350,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(sh.url), fit: BoxFit.cover),
+                color: Color(0xFFFFBB65),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))),
+          ),
+          Container(
+            height: 50,
+            width: 350,
+            decoration: BoxDecoration(
+                color: Color(0xFFD3BFA6),
+                border: Border.all(color: Colors.black12),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20))),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 30, right: 200),
+                  child: Text(
+                    sh.name,
+                    style: TextStyle(
+                        fontFamily: 'PostNoBillsColombo',
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                ),
+                IconButton(
+                    icon: Image.asset('assets/images/icon_favs.png'),
+                    onPressed: () {
+                      print('Favorite button presed');
+                    }),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
