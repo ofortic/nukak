@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nukak/view/market/Product/components/default_buttom.dart';
 import 'package:nukak/models/product.dart';
+import '../../../../constants.dart';
 import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
@@ -22,6 +23,7 @@ class Body extends StatelessWidget {
       child: ListView(
         children: [
           Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
             child: ProductImages(urls: product.url),
           ),
           Container(
@@ -59,6 +61,27 @@ class Body extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget getAppBarHome(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: kPrimaryColor,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            'assets/images/logonukak.png',
+            height: MediaQuery.of(context).size.height * 0.09,
+            color: Colors.white60,
+          ),
+        ],
+      ),
+      centerTitle: true,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(15))),
     );
   }
 }
