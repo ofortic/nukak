@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/favorites/FavoriteView.dart';
 import 'package:nukak/view/profile/ProfileView.dart';
 import 'package:nukak/view/profile/ProfileViewLogin.dart';
+import 'package:nukak/view/profile/ProfileViewEdit.dart';
+import 'favorites/FavoriteView.dart';
 import 'home/HomeView.dart';
-import 'market/MarketView.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
+
+import 'profile/ProfileView.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -93,12 +97,19 @@ class _RootAppState extends State<RootApp> {
             children: List.generate(3, (index) {
               return InkWell(
                 onTap: () {
-                  selectedTab(index);
+                  if (index == 2) {
+                    selectedTab(index);
+                  } else if (index == 0) {
+                    selectedTab(index);
+                    print('Cell pressed');
+                  } else if (index == 1) {
+                    selectedTab(index);
+                  }
                 },
                 child: Image.asset(
                   bottomItems[index],
-                  width: 40,
-                  height: 40,
+                  width: 70,
+                  height: 70,
                 ),
               );
             })),
