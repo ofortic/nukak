@@ -6,6 +6,7 @@ import 'package:nukak/models/shop.dart';
 import 'package:nukak/controller/db.dart' as db;
 import 'package:nukak/view/home/loading_circle.dart';
 import 'package:nukak/view/home/snerror.dart';
+import 'package:nukak/view/market/Product/ProductView.dart';
 
 class MarketView extends StatelessWidget {
   final Shop shop;
@@ -99,7 +100,7 @@ Widget getList(Shop shop) {
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             itemBuilder: (_, index) => Center(
-              child: marketCell(snapshot.data[index]),
+              child: marketCell(context, snapshot.data[index]),
             ),
             separatorBuilder: (_, __) => Divider(),
             itemCount: snapshot.data.length,
@@ -120,64 +121,72 @@ Widget _buildCircle() {
   );
 }
 
-Widget marketCell(Product p) {
-  return Container(
-    height: 200,
-    width: 350,
-    color: Colors.transparent,
-    child: Row(
-      children: <Widget>[
-        Column(
+Widget marketCell(BuildContext context, Product p) {
+  return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ProductView(
+                  product: p,
+                )));
+        print('Cell pressed');
+      },
+      child: Container(
+        height: 200,
+        width: 350,
+        color: Colors.transparent,
+        child: Row(
           children: <Widget>[
-            Container(
-              height: 130,
-              width: 220,
-              decoration: BoxDecoration(
-                  color: Color(0xFF0CD1E5),
-                  borderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(20))),
-              child: Text(
-                p.name,
-                style: TextStyle(
-                    fontFamily: 'PostNoBillsColombo',
-                    fontSize: 23,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
+            Column(
+              children: <Widget>[
+                Container(
+                  height: 130,
+                  width: 220,
+                  decoration: BoxDecoration(
+                      color: Color(0xFF0CD1E5),
+                      borderRadius:
+                          BorderRadius.only(topLeft: Radius.circular(20))),
+                  child: Text(
+                    p.name,
+                    style: TextStyle(
+                        fontFamily: 'PostNoBillsColombo',
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                ),
+                Container(
+                  height: 70,
+                  width: 220,
+                  decoration: BoxDecoration(
+                      color: Color(0xFF5CE794),
+                      borderRadius:
+                          BorderRadius.only(bottomLeft: Radius.circular(20))),
+                )
+              ],
             ),
-            Container(
-              height: 70,
-              width: 220,
-              decoration: BoxDecoration(
-                  color: Color(0xFF5CE794),
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(20))),
+            Column(
+              children: <Widget>[
+                Container(
+                  height: 100,
+                  width: 130,
+                  decoration: BoxDecoration(
+                      color: Color(0xFF979797),
+                      borderRadius:
+                          BorderRadius.only(topRight: Radius.circular(20))),
+                ),
+                Container(
+                  height: 100,
+                  width: 130,
+                  decoration: BoxDecoration(
+                      color: Color(0xFFFFBB65),
+                      borderRadius:
+                          BorderRadius.only(bottomRight: Radius.circular(20))),
+                )
+              ],
             )
           ],
         ),
-        Column(
-          children: <Widget>[
-            Container(
-              height: 100,
-              width: 130,
-              decoration: BoxDecoration(
-                  color: Color(0xFF979797),
-                  borderRadius:
-                      BorderRadius.only(topRight: Radius.circular(20))),
-            ),
-            Container(
-              height: 100,
-              width: 130,
-              decoration: BoxDecoration(
-                  color: Color(0xFFFFBB65),
-                  borderRadius:
-                      BorderRadius.only(bottomRight: Radius.circular(20))),
-            )
-          ],
-        )
-      ],
-    ),
-  );
+      ));
 }
 
 Widget getAppBarHome() {

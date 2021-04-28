@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:nukak/constants.dart';
-import 'package:nukak/view/sizeconfig.dart';
 
 class DefaultButton extends StatelessWidget {
   const DefaultButton({
@@ -15,8 +14,8 @@ class DefaultButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
-      height: 56, //getProportionateScreenHeight(56),
+      width: MediaQuery.of(context).size.width * 0.5,
+      height: MediaQuery.of(context).size.height * 0.09,
       child: FlatButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         color: kPrimaryColor,
@@ -24,7 +23,7 @@ class DefaultButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            fontSize: 18, //getProportionateScreenWidth(18),
+            fontSize: MediaQuery.of(context).size.width * 0.05,
             color: Colors.white,
           ),
         ),

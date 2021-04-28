@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:nukak/models/Product.dart';
+import 'package:nukak/models/product.dart';
 
 import 'package:nukak/constants.dart';
-import 'package:nukak/view/sizeconfig.dart';
 
 class ProductImages extends StatefulWidget {
-  const ProductImages({
+  ProductImages({
     Key key,
-    @required this.product,
+    @required this.urls,
   }) : super(key: key);
 
-  final Product product;
+  final String urls;
 
   @override
   _ProductImagesState createState() => _ProductImagesState();
@@ -18,34 +17,38 @@ class ProductImages extends StatefulWidget {
 
 class _ProductImagesState extends State<ProductImages> {
   int selectedImage = 0;
+
   @override
   Widget build(BuildContext context) {
+    List<String> images = widget.urls.split(",");
+
     return Column(
       children: [
         SizedBox(
-          width: 238, //getProportionateScreenWidth(238),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.4,
           child: AspectRatio(
             aspectRatio: 1,
-            child: Hero(
-              tag: widget.product.id.toString(),
-              child: Image.asset(
-                  "assets/images/logo2nukak.png"), //widget.product.images[selectedImage]),
-            ),
+            child: Image.network(images[selectedImage]),
           ),
         ),
-        // SizedBox(height: getProportionateScreenWidth(20)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //...List.generate(widget.product.images.length,
-            //  (index) => buildSmallProductPreview(index)),
-          ],
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ...List.generate(
+                images.length,
+                (index) => buildSmallProductPreview(images, index),
+              ),
+            ],
+          ),
         )
       ],
     );
   }
 
-  GestureDetector buildSmallProductPreview(int index) {
+  GestureDetector buildSmallProductPreview(List<String> images, int index) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -53,19 +56,18 @@ class _ProductImagesState extends State<ProductImages> {
         });
       },
       child: AnimatedContainer(
-        //duration: defaultDuration,
         margin: EdgeInsets.only(right: 15),
         padding: EdgeInsets.all(8),
         height: 48, //getProportionateScreenWidth(48),
         width: 48, //getProportionateScreenWidth(48),
+        duration: Duration(seconds: 0),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
               color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        child: Image.asset(
-            "assets/images/logo2nukak.png"), //widget.product.images[index]),
+        child: Image.network(images[index]),
       ),
     );
   }
