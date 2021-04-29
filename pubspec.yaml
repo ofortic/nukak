@@ -71,3 +71,6 @@ flutter:
     - family: PostNoBillsColombo
       fonts:
         - asset: assets/fonts/PostNoBillsColombo-SemiBold.ttf
+    - family: FredokaOne
+      fonts:
+        - asset: assets/fonts/FredokaOne-Regular.ttf

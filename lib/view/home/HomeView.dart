@@ -10,6 +10,7 @@ import 'package:nukak/view/market/Product/ProductView.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../constants.dart';
 import '../market/Product/ProductView.dart';
 import 'loading_circle.dart';
 
@@ -67,7 +68,7 @@ class _HomeViewState extends State<HomeView> {
     final firebaseUser = context.watch<User>();
     return Scaffold(
         backgroundColor: Color(0xFFE4D5C2),
-        appBar: animatedAppbar(),
+        appBar: getAppBarHome(),
         body: StreamBuilder(
           stream: db.getShops(),
           builder: (context, AsyncSnapshot<List<Shop>> snapshot) {
@@ -82,43 +83,24 @@ class _HomeViewState extends State<HomeView> {
         ));
   }
 
-  Widget animatedAppbar() {
-    return PreferredSize(
-        child: AppBar(
-          elevation: 0,
-          backgroundColor: Color(0xFFfc8300),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "Nukak",
-                style: TextStyle(
-                    fontFamily: 'PostBillsColombo',
-                    color: Colors.black,
-                    fontSize: 36),
-              )
-            ],
-          ),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(15))),
-        ),
-        preferredSize: _showAppbar ? Size.fromHeight(56) : Size.fromHeight(0));
-  }
-
   Widget getAppBarHome() {
     return AppBar(
       elevation: 0,
-      backgroundColor: Color(0xFFfc8300),
+      backgroundColor: kPrimaryColor,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text("Nukak",
-              style: TextStyle(
-                  fontFamily: 'PostNoBillsColombo',
-                  color: Colors.black,
-                  fontSize: 36))
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            'assets/images/logonukak.png',
+            fit: BoxFit.contain,
+            height: MediaQuery.of(context).size.height * 0.09,
+            color: Colors.white60,
+          ),
+          Container(padding: const EdgeInsets.all(8.0))
         ],
       ),
+      centerTitle: true,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(15))),
     );
@@ -241,24 +223,25 @@ class _HomeViewState extends State<HomeView> {
             height: 50,
             width: 350,
             decoration: BoxDecoration(
-                color: Color(0xFFD3BFA6),
+                color: kPrimaryColor,
                 border: Border.all(color: Colors.black12),
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20))),
             child: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 200),
-                  child: Text(
-                    sh.name,
-                    style: TextStyle(
-                        fontFamily: 'PostNoBillsColombo',
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
+                SizedBox(
+                  height: 1,
+                  width: 30,
                 ),
+                Text(
+                  sh.name,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+                Spacer(),
                 IconButton(
                     icon: Image.asset('assets/images/icon_favs.png'),
                     onPressed: () {
