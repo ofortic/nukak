@@ -19,7 +19,7 @@ class MarketView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color.fromRGBO(226, 215, 171, 1),
       appBar: getAppBarHome(context),
-      body: getBodyTest(context, shop),
+      body: getBody(context, shop),
     );
   }
 }
@@ -42,6 +42,37 @@ Widget getBodyTest(BuildContext context, Shop shop) {
       ],
     ),
     //child: getList(shop),
+  );
+}
+
+Widget getBody(BuildContext context, Shop shop) {
+  return Container(
+    height: MediaQuery.of(context).size.height,
+    width: MediaQuery.of(context).size.width,
+    decoration: BoxDecoration(
+      image: DecorationImage(
+          image: AssetImage("assets/images/Background.png"), fit: BoxFit.cover),
+    ),
+    child: Column(
+      children: [
+        Container(
+          height: MediaQuery.of(context).size.height / 3,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              getProfilePhoto(context, shop),
+              getDescription(shop, context),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: getList(shop)),
+        )
+      ],
+    ),
   );
 }
 

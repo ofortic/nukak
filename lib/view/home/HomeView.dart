@@ -230,16 +230,18 @@ class _HomeViewState extends State<HomeView> {
                     bottomRight: Radius.circular(20))),
             child: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 190),
-                  child: Text(
-                    sh.name,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
+                SizedBox(
+                  height: 1,
+                  width: 30,
                 ),
+                Text(
+                  sh.name,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+                Spacer(),
                 IconButton(
                     icon: Image.asset('assets/images/icon_favs.png'),
                     onPressed: () {
