@@ -24,27 +24,6 @@ class MarketView extends StatelessWidget {
   }
 }
 
-Widget getBodyTest(BuildContext context, Shop shop) {
-  return Container(
-    height: MediaQuery.of(context).size.height,
-    width: MediaQuery.of(context).size.width,
-    decoration: BoxDecoration(
-      image: DecorationImage(
-          image: AssetImage("assets/images/Background.png"), fit: BoxFit.cover),
-    ),
-    child: ListView(
-      children: <Widget>[
-        getProfilePhoto(context, shop),
-        getDescription(shop, context),
-        Container(
-          child: getList(shop),
-        ),
-      ],
-    ),
-    //child: getList(shop),
-  );
-}
-
 Widget getBody(BuildContext context, Shop shop) {
   return Container(
     height: MediaQuery.of(context).size.height,
@@ -56,7 +35,7 @@ Widget getBody(BuildContext context, Shop shop) {
     child: Column(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height / 3,
+          height: MediaQuery.of(context).size.height * 0.38,
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
@@ -67,9 +46,10 @@ Widget getBody(BuildContext context, Shop shop) {
         ),
         Expanded(
           child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: getList(shop)),
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: getList(shop),
+          ),
         )
       ],
     ),
@@ -78,7 +58,7 @@ Widget getBody(BuildContext context, Shop shop) {
 
 Widget getProfilePhoto(BuildContext context, Shop shop) {
   return Container(
-    margin: EdgeInsets.symmetric(vertical: 10),
+    margin: EdgeInsets.symmetric(vertical: 5),
     padding: EdgeInsets.all(10.0),
     width: MediaQuery.of(context).size.width / 2.5,
     height: MediaQuery.of(context).size.width / 2.5,
@@ -97,10 +77,10 @@ Widget getProfilePhoto(BuildContext context, Shop shop) {
 Widget getDescription(Shop shop, context) {
   return Center(
     child: Padding(
-      padding: const EdgeInsets.only(left: 0, right: 0, top: 25, bottom: 5),
+      padding: const EdgeInsets.only(left: 0, right: 0, top: 20, bottom: 0),
       child: Text(shop.description,
           style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width * 0.05,
+              fontSize: MediaQuery.of(context).size.width * 0.03,
               fontWeight: FontWeight.bold,
               color: Colors.black),
           textAlign: TextAlign.center),
