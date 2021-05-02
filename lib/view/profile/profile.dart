@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/home/loading_circle.dart';
+import 'package:nukak/view/profile/Login/SignupView.dart';
+import 'package:nukak/view/profile/Login/register_as_seller.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -82,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 35,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           RaisedButton(
                             onPressed: () {
@@ -92,15 +94,35 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             },
                             color: kPrimaryColor,
-                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            padding: EdgeInsets.symmetric(horizontal: 15),
                             elevation: 2,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                             child: Text(
                               "Editar perfil",
                               style: TextStyle(
-                                  fontSize: 14,
-                                  letterSpacing: 2.2,
+                                  fontSize: 10,
+                                  letterSpacing: 1,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          RaisedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterSeller()),
+                              );
+                            },
+                            color: kPrimaryColor,
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Text(
+                              "Vender productos",
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  letterSpacing: 1,
                                   color: Colors.white),
                             ),
                           )
