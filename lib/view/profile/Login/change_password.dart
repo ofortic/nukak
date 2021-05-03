@@ -104,9 +104,7 @@ class _ChangePassword extends State<ChangePassword> {
                                     color: Colors.black)),
                           ),
                           RaisedButton(
-                            onPressed: () {
-                              Dialogs.yesAbortDialog(context);
-                            },
+                            onPressed: () {},
                             color: Colors.green,
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             elevation: 2,

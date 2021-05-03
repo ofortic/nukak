@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nukak/view/favorites/FavoriteView.dart';
-import 'package:nukak/view/profile/profile.dart';
+
 import 'package:nukak/view/profile/profile_menu/profile_menu_view.dart';
+
+import 'package:nukak/view/profile/Profile-menu/profile_menu_view.dart';
+
 import 'favorites/FavoriteView.dart';
 import 'home/HomeView.dart';
 

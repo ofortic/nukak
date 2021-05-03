@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nukak/models/request.dart';
+import 'package:nukak/view/market/MarketView.dart';
 
 import 'package:nukak/view/profile/Login/LoginView.dart';
 
@@ -15,6 +16,8 @@ class RegisterSeller extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
     return Scaffold(
+      backgroundColor: Color.fromRGBO(226, 215, 171, 1),
+      appBar: getAppBarHome(context),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
