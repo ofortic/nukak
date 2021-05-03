@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:nukak/constants.dart';
+import 'package:nukak/models/message.dart';
 
-class VideoMessage extends StatelessWidget {
+class ImageMessage extends StatelessWidget {
+  const ImageMessage({
+    Key key,
+    @required this.message,
+  }) : super(key: key);
+
+  final Message message;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -14,21 +21,8 @@ class VideoMessage extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.asset("assets/images/logo2nukak.png"),
+              child: Image.network(message.image),
             ),
-            Container(
-              height: 25,
-              width: 25,
-              decoration: BoxDecoration(
-                color: kPrimaryColor,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.play_arrow,
-                size: 16,
-                color: Colors.white,
-              ),
-            )
           ],
         ),
       ),

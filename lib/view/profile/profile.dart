@@ -1,13 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/home/loading_circle.dart';
-import 'package:nukak/view/profile/Login/SignupView.dart';
-import 'package:nukak/view/profile/Login/register_as_seller.dart';
+import 'package:nukak/view/profile/edit_profile.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import 'edit_profile.dart';
 
 class Settings extends StatelessWidget {
   @override
@@ -84,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 35,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           RaisedButton(
                             onPressed: () {
@@ -101,27 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Text(
                               "Editar perfil",
                               style: TextStyle(
-                                  fontSize: 10,
-                                  letterSpacing: 1,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          RaisedButton(
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterSeller()),
-                              );
-                            },
-                            color: kPrimaryColor,
-                            padding: EdgeInsets.symmetric(horizontal: 15),
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Text(
-                              "Vender productos",
-                              style: TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 15,
                                   letterSpacing: 1,
                                   color: Colors.white),
                             ),
@@ -169,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
-            'assets/images/logonukak.png',
+            "assets/images/logonukak.png",
             fit: BoxFit.contain,
             height: MediaQuery.of(context).size.height * 0.09,
             color: Colors.white60,

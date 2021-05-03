@@ -10,17 +10,49 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
       body: Body(),
-      bottomNavigationBar: buildBottomNavigationBar(),
+      //bottomNavigationBar: buildBottomNavigationBar(),
     );
   }
 
-  BottomNavigationBar buildBottomNavigationBar() {
+  AppBar buildAppBar() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      title: Text("Chats"),
+      backgroundColor: kPrimaryColor,
+    );
+  }
+}
+
+class ChatsScreenCraftsman extends StatefulWidget {
+  @override
+  _ChatsScreenStateCraftsman createState() => _ChatsScreenStateCraftsman();
+}
+
+class _ChatsScreenStateCraftsman extends State<ChatsScreenCraftsman> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildAppBar(),
+      body: BodyCraftsman(),
+      //bottomNavigationBar: buildBottomNavigationBar(),
+    );
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      title: Text("Chats"),
+      backgroundColor: kPrimaryColor,
+    );
+  }
+}
+
+/*BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       currentIndex: _selectedIndex,
@@ -34,13 +66,4 @@ class _ChatsScreenState extends State<ChatsScreen> {
         BottomNavigationBarItem(icon: Icon(Icons.people), label: "Personas"),
       ],
     );
-  }
-
-  AppBar buildAppBar() {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      title: Text("Chats"),
-      backgroundColor: kPrimaryColor,
-    );
-  }
-}
+  }*/

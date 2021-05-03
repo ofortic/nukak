@@ -22,7 +22,8 @@ class Request {
       };
   Request(this.userId, this.reason)
       : datetime = DateTime.now(),
-        url = "none",
+        url =
+            "https://firebasestorage.googleapis.com/v0/b/nukak-maku.appspot.com/o/uploads%2Fdownload%20(1).png?alt=media&token=fe93e733-8a5a-4374-9587-3a0065129eea",
         approved = false;
 }
 

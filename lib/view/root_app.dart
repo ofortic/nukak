@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/favorites/FavoriteView.dart';
 import 'package:nukak/view/profile/profile.dart';
+import 'package:nukak/view/profile/profile_menu/profile_menu_view.dart';
 import 'favorites/FavoriteView.dart';
 import 'home/HomeView.dart';
-import 'package:provider/provider.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -25,7 +24,7 @@ class _RootAppState extends State<RootApp> {
   }
 
   Widget getBody() {
-    List<Widget> views = [ProfilePage(), HomeView(), FavoriteView()];
+    List<Widget> views = [ProfileScreen(), HomeView(), FavoriteView()];
     return IndexedStack(
       index: pageIndex,
       children: views,

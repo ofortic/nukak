@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:nukak/models/product.dart';
 import 'package:nukak/view/market/MarketView.dart';
-import '../../../constants.dart';
 import 'components/body.dart';
 
 class ProductView extends StatelessWidget {

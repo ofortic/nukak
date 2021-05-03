@@ -1,16 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/models/request.dart';
 
 import 'package:nukak/view/profile/Login/LoginView.dart';
 
+import 'package:provider/provider.dart';
+import 'package:nukak/controller/db.dart' as db;
 import '../../../constants.dart';
 import 'Dialog.dart';
 
 class RegisterSeller extends StatelessWidget {
   @override
+  String description;
   Widget build(BuildContext context) {
-    String name;
-    String city;
-    String description;
+    final firebaseUser = context.watch<User>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -39,21 +42,9 @@ class RegisterSeller extends StatelessWidget {
                 height: 35,
               ),
               RoundedInputField(
-                hintText: "Nombre de tu empresa",
-                onChanged: (value) {
-                  name = value;
-                },
-              ),
-              RoundedInputField(
-                hintText: "Descripción de tu empresa",
+                hintText: "Descripcion de tu empresa",
                 onChanged: (value) {
                   description = value;
-                },
-              ),
-              RoundedInputField(
-                hintText: "Ciudad de tu empresa",
-                onChanged: (value) {
-                  city = value;
                 },
               ),
               Container(
@@ -66,7 +57,9 @@ class RegisterSeller extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                     color: kPrimaryColor,
                     onPressed: () {
-                      Dialogs.yesAbortDialog(context);
+                      db
+                          .sendRequest(Request(firebaseUser.uid, description))
+                          .then((value) => Navigator.of(context).pop());
                     },
                     child: Text(
                       "Registrarme",

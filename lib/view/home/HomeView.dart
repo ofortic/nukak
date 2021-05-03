@@ -2,16 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nukak/controller/db.dart' as db;
+import 'package:nukak/models/favourite.dart';
 import 'package:nukak/models/shop.dart';
 import 'package:nukak/view/chat/screens/chats/chats_screen.dart';
 import 'package:nukak/view/home/snerror.dart';
 import 'package:nukak/view/market/MarketView.dart';
-import 'package:nukak/view/market/Product/ProductView.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../constants.dart';
-import '../market/Product/ProductView.dart';
 import 'loading_circle.dart';
 
 class HomeView extends StatefulWidget {
@@ -27,7 +26,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller.addListener(() {
       if (_controller.position.pixels <= 56) {
@@ -39,7 +37,6 @@ class _HomeViewState extends State<HomeView> {
     _controller.addListener(() {
       if (_controller.position.userScrollDirection == ScrollDirection.reverse) {
         if (!isScrollingDown) {
-          print('Scrolling down');
           isScrollingDown = true;
           _showAppbar = false;
           setState(() {});
@@ -47,7 +44,6 @@ class _HomeViewState extends State<HomeView> {
       }
       if (_controller.position.userScrollDirection == ScrollDirection.forward) {
         if (isScrollingDown) {
-          print('Scrolling up');
           isScrollingDown = false;
           _showAppbar = true;
           setState(() {});
@@ -78,7 +74,7 @@ class _HomeViewState extends State<HomeView> {
             if (!snapshot.hasData) {
               return Loading();
             }
-            return getBody(snapshot.data);
+            return getBody(snapshot.data, firebaseUser.uid);
           },
         ));
   }
@@ -106,7 +102,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget getBody(List<Shop> shops) {
+  Widget getBody(List<Shop> shops, String uid) {
     print(shops.length);
     return Center(
       child: Padding(
@@ -116,7 +112,7 @@ class _HomeViewState extends State<HomeView> {
           controller: _controller,
           physics: _physics,
           itemBuilder: (context, index) => Center(
-            child: shopCellImage(shops[index]),
+            child: shopCellImage(shops[index], uid),
           ),
           separatorBuilder: (_, __) => Divider(),
         ),
@@ -124,7 +120,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget shopCell(Shop sh) {
+  Widget shopCell(Shop sh, String uid) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -197,7 +193,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget shopCellImage(Shop sh) {
+  Widget shopCellImage(Shop sh, String uid) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -245,7 +241,18 @@ class _HomeViewState extends State<HomeView> {
                 IconButton(
                     icon: Image.asset('assets/images/icon_favs.png'),
                     onPressed: () {
-                      print('Favorite button presed');
+                      db
+                          .isFavourite(uid, sh.id)
+                          .then((value) => {
+                                print(value),
+                                if (value)
+                                  {db.deleteFavorurite(uid, sh.id)}
+                                else
+                                  {db.sendFavourite(uid, Favourite(uid, sh.id))}
+                              })
+                          .catchError((onErrror) {
+                        print('hello');
+                      });
                     }),
               ],
             ),

@@ -132,7 +132,7 @@ Widget shopCellImage(BuildContext context, Product p) {
           width: MediaQuery.of(context).size.width * 0.9,
           decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/logonukak.png'),
+                image: NetworkImage(p.url.split(',')[0]),
                 fit: BoxFit.cover), //NetworkImage(sh.url), fit: BoxFit.cover),
             color: Color(0xFFFFBB65),
             border: Border.all(color: Colors.black12),

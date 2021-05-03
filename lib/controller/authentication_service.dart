@@ -114,6 +114,12 @@ class UserHelper {
     return UserParsing.fromJson(us.data());
   }
 
+  static Future<UserParsing> getUserChat(String user) async {
+    final userRef = db.collection("users").doc(user);
+    final us = await userRef.get();
+    return UserParsing.fromJson(us.data());
+  }
+
   static Future<String> saveUser(User user) async {
     Map<String, dynamic> userData = {
       "userId": user.uid,

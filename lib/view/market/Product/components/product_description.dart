@@ -26,30 +26,6 @@ class ProductDescription extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Container(
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
-            width: MediaQuery.of(context).size.width * 0.15,
-            decoration: BoxDecoration(
-              color:
-                  //product.isFavourite ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
-                  kPrimaryColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
-              ),
-            ),
-            child: Image.asset(
-              "assets/images/favorite.png",
-              color:
-                  //product.isFavourite ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
-                  Colors.white,
-              height: MediaQuery.of(context).size.height * 0.03,
-              width: MediaQuery.of(context).size.width * 0.7,
-            ),
-          ),
-        ),
         Padding(
           padding: EdgeInsets.only(
             left: 20, //getProportionateScreenWidth(20),
