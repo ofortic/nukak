@@ -4,25 +4,26 @@ import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/home/loading_circle.dart';
 import 'package:provider/provider.dart';
 
-import '../../constants.dart';
+import '../../../constants.dart';
+import 'Dialog.dart';
 
-class SettingsUI extends StatelessWidget {
+class ChangePass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Setting UI",
-      home: EditProfilePage(),
+      home: ChangePassword(),
     );
   }
 }
 
-class EditProfilePage extends StatefulWidget {
+class ChangePassword extends StatefulWidget {
   @override
-  _EditProfilePageState createState() => _EditProfilePageState();
+  _ChangePassword createState() => _ChangePassword();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class _ChangePassword extends State<ChangePassword> {
   bool showPassword = false;
   @override
   Widget build(BuildContext context) {
@@ -38,13 +39,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 height: MediaQuery.of(context).size.height,
                 padding: EdgeInsets.only(left: 16, top: 25, right: 16),
                 child: GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                  },
                   child: ListView(
                     children: [
                       Text(
-                        "Editar perfil",
+                        "Cambiar contraseña",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.w500),
@@ -73,43 +71,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                    snapshot.data.url,
+                                  image: AssetImage(
+                                    "assets/images/logo2nukak.png",
                                   ),
                                 ),
                               ),
                             ),
-                            Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      width: 4,
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor,
-                                    ),
-                                    color: Colors.green,
-                                  ),
-                                  child: Icon(
-                                    Icons.edit,
-                                    color: Colors.white,
-                                  ),
-                                )),
                           ],
                         ),
                       ),
                       SizedBox(
                         height: 35,
                       ),
-                      buildTextField("Nombre", snapshot.data.name, false),
-                      buildTextField(
-                          "Correo electrónico", snapshot.data.email, false),
-                      buildTextField("Ciudad", snapshot.data.city, false),
-                      buildTextField("Teléfono", snapshot.data.tel, false),
+                      buildTextField("Contraseña actual", "********", true),
+                      buildTextField("Nueva contraseña", "********", true),
+                      buildTextField("Confirmar contraseña", "********", true),
                       SizedBox(
                         height: 35,
                       ),
@@ -128,7 +104,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     color: Colors.black)),
                           ),
                           RaisedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Dialogs.yesAbortDialog(
+                                  context,
+                                  "¡Operación exitosa!",
+                                  "Se ha cambiado la contraseña de tu cuenta");
+                            },
                             color: Colors.green,
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             elevation: 2,

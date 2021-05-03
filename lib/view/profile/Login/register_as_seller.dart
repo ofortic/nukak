@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nukak/view/market/MarketView.dart';
 
 import 'package:nukak/view/profile/Login/LoginView.dart';
 
@@ -12,6 +13,8 @@ class RegisterSeller extends StatelessWidget {
     String city;
     String description;
     return Scaffold(
+      backgroundColor: Color.fromRGBO(226, 215, 171, 1),
+      appBar: getAppBarHome(context),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -66,7 +69,8 @@ class RegisterSeller extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                     color: kPrimaryColor,
                     onPressed: () {
-                      Dialogs.yesAbortDialog(context);
+                      Dialogs.yesAbortDialog(context, "¡Registro exitoso!",
+                          "Muy pronto estaremos en contacto contigo para terminar el proceso de registro");
                     },
                     child: Text(
                       "Registrarme",

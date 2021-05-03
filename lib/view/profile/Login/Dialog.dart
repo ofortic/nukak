@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nukak/constants.dart';
 import 'package:nukak/view/home/HomeView.dart';
-import 'package:nukak/view/profile/profile.dart';
+import 'package:nukak/view/root_app.dart';
 
 enum DialogAction { Aceptar }
 
 class Dialogs {
   static Future<DialogAction> yesAbortDialog(
     BuildContext context,
+    String title,
+    String description,
   ) async {
     final action = await showDialog(
       context: context,
@@ -18,11 +20,11 @@ class Dialogs {
             borderRadius: BorderRadius.circular(10),
           ),
           title: Text(
-            "¡Registro exitoso!",
+            title,
             textAlign: TextAlign.center,
           ),
           content: Text(
-            "Muy pronto estaremos en contacto contigo para terminar el proceso de registro",
+            description,
             textAlign: TextAlign.center,
           ),
           actions: <Widget>[
@@ -32,10 +34,7 @@ class Dialogs {
               children: [
                 RaisedButton(
                   onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeView()),
-                        (Route<dynamic> route) => false);
+                    Navigator.pop(context);
                   },
                   color: kPrimaryColor,
                   child: const Text(
