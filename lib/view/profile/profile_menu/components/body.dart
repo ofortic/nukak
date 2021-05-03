@@ -141,6 +141,7 @@ class BodyUser extends StatelessWidget {
             text: "Cerrar sesión",
             icon: "assets/images/logout.png",
             press: () {
+              print('hola?');
               context.read<AuthenticationService>().signOut();
             },
           ),
