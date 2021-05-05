@@ -105,6 +105,20 @@ Future<void> sendChat(Chat ch) async {
   });
 }
 
+Future<void> updateChatLastMessage(String chat, String lastMessage) async {
+  final userRef = FirebaseFirestore.instance.collection("chats").doc(chat);
+  if ((await userRef.get()).exists) {
+    await userRef.update({'lastMessage': lastMessage});
+  } else {}
+}
+
+/*Future<void> updateChatDatetime(String chat, String lastMessage) async {
+  final userRef = FirebaseFirestore.instance.collection("chats").doc(chat);
+  if ((await userRef.get()).exists) {
+    await userRef.update({'lastMessage': lastMessage});
+  } else {}
+}*/
+
 //  CHECK IF A SHOP IS A FAVOURITE
 Future<List<Chat>> queryChat(
     String userId, String craftsmanId, String productId) async {
@@ -138,6 +152,7 @@ Future<List<Chat>> isThereAChat(
 Stream<List<Message>> getMessages(String chatId) {
   return FirebaseFirestore.instance
       .collection('chats/$chatId/messages')
+      .orderBy('datetime')
       .snapshots()
       .map(toMessageList);
 }

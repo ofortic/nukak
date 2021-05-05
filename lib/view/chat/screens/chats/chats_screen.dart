@@ -1,5 +1,6 @@
 import 'package:nukak/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/view/market/MarketView.dart';
 
 import '../../../../constants.dart';
 import 'components/body.dart';
@@ -13,7 +14,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: getAppBarHome(context),
       body: Body(),
       //bottomNavigationBar: buildBottomNavigationBar(),
     );
@@ -37,7 +38,7 @@ class _ChatsScreenStateCraftsman extends State<ChatsScreenCraftsman> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: getAppBarHome(context),
       body: BodyCraftsman(),
       //bottomNavigationBar: buildBottomNavigationBar(),
     );

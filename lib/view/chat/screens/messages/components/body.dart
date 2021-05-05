@@ -38,7 +38,9 @@ class Body extends StatelessWidget {
                 ),
               ),
             ),
-            ChatInputField(),
+            ChatInputField(
+              chat: this.chat,
+            ),
           ],
         );
       },

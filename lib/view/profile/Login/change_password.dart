@@ -26,6 +26,17 @@ class ChangePassword extends StatefulWidget {
 class _ChangePassword extends State<ChangePassword> {
   bool showPassword = false;
   @override
+  TextEditingController newController = TextEditingController();
+  TextEditingController confirmController = TextEditingController();
+  TextEditingController currentController = TextEditingController();
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    newController.dispose();
+    confirmController.dispose();
+    currentController.dispose();
+  }
+
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
     return FutureBuilder(
@@ -50,42 +61,102 @@ class _ChangePassword extends State<ChangePassword> {
                       SizedBox(
                         height: 15,
                       ),
-                      Center(
-                        child: Stack(
-                          children: [
-                            Container(
-                              width: 130,
-                              height: 130,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 4,
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor),
-                                boxShadow: [
-                                  BoxShadow(
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      color: Colors.black.withOpacity(0.1),
-                                      offset: Offset(0, 10))
-                                ],
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage(
-                                    "assets/images/logo2nukak.png",
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                       SizedBox(
                         height: 35,
                       ),
-                      buildTextField("Contraseña actual", "********", true),
-                      buildTextField("Nueva contraseña", "********", true),
-                      buildTextField("Confirmar contraseña", "********", true),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 35.0),
+                        child: TextField(
+                          controller: currentController,
+                          obscureText: true ? showPassword : false,
+                          decoration: InputDecoration(
+                              suffixIcon: true
+                                  ? IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          showPassword = !showPassword;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.remove_red_eye,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  : null,
+                              contentPadding: EdgeInsets.only(bottom: 3),
+                              labelText: "Contraseña actual",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: "********",
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 35.0),
+                        child: TextField(
+                          controller: newController,
+                          obscureText: true ? showPassword : false,
+                          decoration: InputDecoration(
+                              suffixIcon: true
+                                  ? IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          showPassword = !showPassword;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.remove_red_eye,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  : null,
+                              contentPadding: EdgeInsets.only(bottom: 3),
+                              labelText: "Nueva contraseña",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: "********",
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 35.0),
+                        child: TextField(
+                          controller: confirmController,
+                          obscureText: true ? showPassword : false,
+                          decoration: InputDecoration(
+                              suffixIcon: true
+                                  ? IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          showPassword = !showPassword;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.remove_red_eye,
+                                        color: Colors.grey,
+                                      ),
+                                    )
+                                  : null,
+                              contentPadding: EdgeInsets.only(bottom: 3),
+                              labelText: "Confirmar contraseña",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: "********",
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                        ),
+                      ),
                       SizedBox(
                         height: 35,
                       ),
@@ -96,7 +167,9 @@ class _ChangePassword extends State<ChangePassword> {
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
                             child: Text("Cancelar",
                                 style: TextStyle(
                                     fontSize: 14,
@@ -104,7 +177,30 @@ class _ChangePassword extends State<ChangePassword> {
                                     color: Colors.black)),
                           ),
                           RaisedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (currentController.text.length > 0) {
+                                UserHelper.validatePassword(
+                                        firebaseUser, currentController.text)
+                                    .then((value) {
+                                  if (value) {
+                                    if (newController.text.length > 0 &&
+                                        newController.text ==
+                                            confirmController.text) {
+                                      UserHelper.updatePassword(
+                                              firebaseUser, newController.text)
+                                          .then((value) =>
+                                              Navigator.of(context).pop());
+                                    } else {
+                                      print('passwords do not match');
+                                    }
+                                  } else {
+                                    print('invalid pass');
+                                  }
+                                });
+                              } else {
+                                print('invalid pass');
+                              }
+                            },
                             color: Colors.green,
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             elevation: 2,
@@ -130,39 +226,6 @@ class _ChangePassword extends State<ChangePassword> {
           }
           return Loading();
         });
-  }
-
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 35.0),
-      child: TextField(
-        obscureText: isPasswordTextField ? showPassword : false,
-        decoration: InputDecoration(
-            suffixIcon: isPasswordTextField
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.grey,
-                    ),
-                  )
-                : null,
-            contentPadding: EdgeInsets.only(bottom: 3),
-            labelText: labelText,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintText: placeholder,
-            hintStyle: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            )),
-      ),
-    );
   }
 
   Widget getAppBarHome(BuildContext context) {

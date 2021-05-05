@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/models/chat.dart';
 import 'package:nukak/models/message.dart';
 import 'package:nukak/view/chat/screens/messages/message_screen.dart';
@@ -21,85 +22,100 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
     Chat ch;
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("assets/images/Background.png"),
-            fit: BoxFit.cover),
-      ),
-      child: ListView(
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            child: ProductImages(urls: product.url),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 5),
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: Column(
+    return FutureBuilder(
+        future: UserHelper.getUserChat(product.userId),
+        builder: (context, snapshot) {
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/images/Background.png"),
+                  fit: BoxFit.cover),
+            ),
+            child: ListView(
               children: [
-                ProductDescription(
-                  product: product,
-                  pressOnSeeMore: () {},
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  child: ProductImages(urls: product.url),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 0),
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  height: MediaQuery.of(context).size.height * 0.5,
                   child: Column(
                     children: [
-                      TopRoundedContainer(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.07,
-                            right: MediaQuery.of(context).size.width * 0.07,
-                            bottom: 0,
-                            top: 0,
-                          ),
-                          child: DefaultButton(
-                            text: "Chatear con el vendedor",
-                            press: () {
-                              db
-                                  .isThereAChat(firebaseUser.uid,
-                                      product.userId, product.id)
-                                  .then((value) {
-                                if (value != null) {
-                                  if (value.length != 0) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => MessagesScreen(
-                                          chat: value.first,
-                                          name: '  ',
-                                          url: product.url,
-                                          productName: product.name,
-                                          uid: firebaseUser.uid,
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    ch = Chat(product.userId, firebaseUser.uid,
-                                        '', product.name);
-                                    db.sendChat(ch).then((value) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => MessagesScreen(
-                                            chat: ch,
-                                            name: '  ',
-                                            url: product.url,
-                                            productName: product.name,
-                                            uid: firebaseUser.uid,
-                                          ),
-                                        ),
-                                      );
+                      ProductDescription(
+                        product: product,
+                        pressOnSeeMore: () {},
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 0),
+                        child: Column(
+                          children: [
+                            TopRoundedContainer(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  bottom: 0,
+                                  top: 0,
+                                ),
+                                child: DefaultButton(
+                                  text: "Chatear con el vendedor",
+                                  press: () {
+                                    db
+                                        .isThereAChat(firebaseUser.uid,
+                                            product.userId, product.id)
+                                        .then((value) {
+                                      print(value);
+                                      if (value != null) {
+                                        if (value.length != 0) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MessagesScreen(
+                                                chat: value.first,
+                                                name: snapshot.data.name,
+                                                url: product.url,
+                                                productName: product.name,
+                                                uid: firebaseUser.uid,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          ch = Chat(
+                                              product.userId,
+                                              firebaseUser.uid,
+                                              '',
+                                              product.name,
+                                              product.id);
+                                          db.sendChat(ch).then((value) {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MessagesScreen(
+                                                  chat: ch,
+                                                  name: snapshot.data.name,
+                                                  url: product.url,
+                                                  productName: product.name,
+                                                  uid: firebaseUser.uid,
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                        }
+                                      } else {
+                                        print('invalid');
+                                      }
                                     });
-                                  }
-                                } else {
-                                  print('invalid');
-                                }
-                              });
-                            },
-                          ),
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -107,10 +123,8 @@ class Body extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 
   Widget getAppBarHome(BuildContext context) {

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nukak/controller/authentication_service.dart';
+import 'package:nukak/controller/storage_service.dart';
 import 'package:nukak/view/home/loading_circle.dart';
 import 'package:provider/provider.dart';
-
+import 'dart:io';
 import '../../constants.dart';
 
 class SettingsUI extends StatelessWidget {
@@ -25,6 +27,62 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   bool showPassword = false;
   @override
+  File _imageFile;
+  TextEditingController myNameController = TextEditingController();
+  TextEditingController myCityController = TextEditingController();
+  TextEditingController myPhoneController = TextEditingController();
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    myNameController.dispose();
+    myCityController.dispose();
+    myPhoneController.dispose();
+  }
+
+  ///NOTE: Only supported on Android & iOS
+  ///Needs image_picker plugin {https://pub.dev/packages/image_picker}
+  final picker = ImagePicker();
+
+  Future pickImageFromCamera() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    if (pickedFile != null) _imageFile = File(pickedFile.path);
+  }
+
+  Future pickImageFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    if (pickedFile != null) _imageFile = File(pickedFile.path);
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Galeria'),
+                      onTap: () {
+                        pickImageFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camara'),
+                    onTap: () {
+                      pickImageFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
     return FutureBuilder(
@@ -55,30 +113,34 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Center(
                         child: Stack(
                           children: [
-                            Container(
-                              width: 130,
-                              height: 130,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 4,
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor),
-                                boxShadow: [
-                                  BoxShadow(
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      color: Colors.black.withOpacity(0.1),
-                                      offset: Offset(0, 10))
-                                ],
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                    snapshot.data.url,
+                            GestureDetector(
+                                onTap: () {
+                                  _showPicker(context);
+                                },
+                                child: Container(
+                                  width: 130,
+                                  height: 130,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 4,
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          spreadRadius: 2,
+                                          blurRadius: 10,
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: Offset(0, 10))
+                                    ],
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                        snapshot.data.url,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
+                                )),
                             Positioned(
                                 bottom: 0,
                                 right: 0,
@@ -105,22 +167,70 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       SizedBox(
                         height: 35,
                       ),
-                      buildTextField("Nombre", snapshot.data.name, false),
-                      buildTextField(
-                          "Correo electrónico", snapshot.data.email, false),
-                      buildTextField("Ciudad", snapshot.data.city, false),
-                      buildTextField("Teléfono", snapshot.data.tel, false),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 35.0),
+                        child: TextField(
+                          controller: myNameController,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom: 3),
+                              labelText: 'Nombre',
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: snapshot.data.name,
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 35.0),
+                        child: TextField(
+                          controller: myCityController,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom: 3),
+                              labelText: 'Ciudad',
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: snapshot.data.city,
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 35.0),
+                        child: TextField(
+                          controller: myPhoneController,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(bottom: 3),
+                              labelText: 'Teléfono',
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: snapshot.data.tel,
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                        ),
+                      ),
                       SizedBox(
                         height: 35,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           OutlineButton(
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
                             child: Text("Cancelar",
                                 style: TextStyle(
                                     fontSize: 14,
@@ -128,14 +238,131 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     color: Colors.black)),
                           ),
                           RaisedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (_imageFile != null) {
+                                StorageService ss =
+                                    context.read<StorageService>();
+                                ss
+                                    .uploadImageToFirebase(context, _imageFile)
+                                    .then((value1) {
+                                  ss
+                                      .getDownloadUrl(context, value1)
+                                      .then((value) {
+                                    UserHelper.updateProfilePic(
+                                            firebaseUser.uid, value)
+                                        .then((value) {
+                                      print('Data updated');
+                                      int count = 0;
+                                      Navigator.of(context)
+                                        ..popUntil((_) => count++ >= 2);
+                                    });
+                                  });
+                                });
+                              } else {
+                                print('No file');
+                              }
+                            },
                             color: Colors.green,
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             elevation: 2,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                             child: Text(
-                              "Guardar",
+                              "Guardar Imagen",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  letterSpacing: 2.2,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RaisedButton(
+                            onPressed: () {
+                              if (myNameController.text.length > 0) {
+                                UserHelper.updateUserName(
+                                        firebaseUser.uid, myNameController.text)
+                                    .then((value) {
+                                  print('Data updated');
+                                  int count = 0;
+                                  Navigator.of(context)
+                                    ..popUntil((_) => count++ >= 2);
+                                });
+                              } else {
+                                print('no new name');
+                              }
+                            },
+                            color: Colors.green,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Text(
+                              "Guardar Nombre",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  letterSpacing: 2.2,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          RaisedButton(
+                            onPressed: () {
+                              if (myCityController.text.length > 0) {
+                                UserHelper.updateCity(
+                                        firebaseUser.uid, myCityController.text)
+                                    .then((value) {
+                                  print('Data updated');
+                                  int count = 0;
+                                  Navigator.of(context)
+                                    ..popUntil((_) => count++ >= 2);
+                                });
+                              } else {
+                                print('no new name');
+                              }
+                            },
+                            color: Colors.green,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Text(
+                              "Guardar ciudad",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  letterSpacing: 2.2,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RaisedButton(
+                            onPressed: () {
+                              if (myPhoneController.text.length > 0) {
+                                UserHelper.updatePhone(firebaseUser.uid,
+                                        myPhoneController.text)
+                                    .then((value) {
+                                  print('Data updated');
+                                  int count = 0;
+                                  Navigator.of(context)
+                                    ..popUntil((_) => count++ >= 2);
+                                });
+                              } else {
+                                print('no new name');
+                              }
+                            },
+                            color: Colors.green,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Text(
+                              "Guardar telefono",
                               style: TextStyle(
                                   fontSize: 14,
                                   letterSpacing: 2.2,
@@ -156,26 +383,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
         });
   }
 
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
+  Widget buildTextField(String labelText, String placeholder) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextField(
-        obscureText: isPasswordTextField ? showPassword : false,
         decoration: InputDecoration(
-            suffixIcon: isPasswordTextField
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.grey,
-                    ),
-                  )
-                : null,
             contentPadding: EdgeInsets.only(bottom: 3),
             labelText: labelText,
             floatingLabelBehavior: FloatingLabelBehavior.always,

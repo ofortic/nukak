@@ -107,7 +107,7 @@ class UserParsing {
 
 class UserHelper {
   static FirebaseFirestore db = FirebaseFirestore.instance;
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   static Future<UserParsing> getUser(User user) async {
     final userRef = db.collection("users").doc(user.uid);
     final us = await userRef.get();
@@ -146,5 +146,44 @@ class UserHelper {
     if ((await userRef.get()).exists) {
       await userRef.update({'name': username});
     } else {}
+  }
+
+  static updateProfilePic(String user, String pp) async {
+    final userRef = db.collection("users").doc(user);
+    if ((await userRef.get()).exists) {
+      await userRef.update({'url': pp});
+    } else {}
+  }
+
+  static updateCity(String user, String city) async {
+    final userRef = db.collection("users").doc(user);
+    if ((await userRef.get()).exists) {
+      await userRef.update({'city': city});
+    } else {}
+  }
+
+  static updatePhone(String user, String phone) async {
+    final userRef = db.collection("users").doc(user);
+    if ((await userRef.get()).exists) {
+      await userRef.update({'tel': phone});
+    } else {}
+  }
+
+  static Future<bool> validatePassword(
+      User firebaseUser, String password) async {
+    var authCredentials = EmailAuthProvider.credential(
+        email: firebaseUser.email, password: password);
+    try {
+      var authResult =
+          await firebaseUser.reauthenticateWithCredential(authCredentials);
+      return authResult.user != null;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  static Future<void> updatePassword(User firebaseUser, String password) async {
+    firebaseUser.updatePassword(password);
   }
 }
