@@ -156,8 +156,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     ),
                                     color: Colors.green,
                                   ),
-                                  child: Icon(
-                                    Icons.edit,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      print("holahola");
+                                    },
+                                    icon: new Icon(
+                                      Icons.edit,
+                                      size: 20,
+                                    ),
                                     color: Colors.white,
                                   ),
                                 )),
@@ -172,16 +178,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: TextField(
                           controller: myNameController,
                           decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(bottom: 3),
-                              labelText: 'Nombre',
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              hintText: snapshot.data.name,
-                              hintStyle: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              )),
+                            contentPadding: EdgeInsets.only(bottom: 3),
+                            labelText: 'Nombre',
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: snapshot.data.name,
+                            hintStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                print("holahola");
+                              },
+                              icon: Icon(Icons.save),
+                            ),
+                          ),
                         ),
                       ),
                       Padding(
@@ -189,16 +201,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: TextField(
                           controller: myCityController,
                           decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(bottom: 3),
-                              labelText: 'Ciudad',
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              hintText: snapshot.data.city,
-                              hintStyle: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              )),
+                            contentPadding: EdgeInsets.only(bottom: 3),
+                            labelText: 'Ciudad',
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: snapshot.data.city,
+                            hintStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                print("holahola");
+                              },
+                              icon: Icon(Icons.save),
+                            ),
+                          ),
                         ),
                       ),
                       Padding(
@@ -206,22 +224,28 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: TextField(
                           controller: myPhoneController,
                           decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(bottom: 3),
-                              labelText: 'Teléfono',
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              hintText: snapshot.data.tel,
-                              hintStyle: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              )),
+                            contentPadding: EdgeInsets.only(bottom: 3),
+                            labelText: 'Teléfono',
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: snapshot.data.tel,
+                            hintStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                print("holahola");
+                              },
+                              icon: Icon(Icons.save),
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
                         height: 35,
                       ),
-                      Row(
+                      /* Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           OutlineButton(
@@ -370,7 +394,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                           ),
                         ],
-                      ),
+                      ), */
                     ],
                   ),
                 ),

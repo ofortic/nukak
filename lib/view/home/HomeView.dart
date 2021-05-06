@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:nukak/controller/db.dart' as db;
 import 'package:nukak/models/favourite.dart';
 import 'package:nukak/models/shop.dart';
-import 'package:nukak/view/chat/screens/chats/chats_screen.dart';
 import 'package:nukak/view/home/snerror.dart';
 import 'package:nukak/view/market/MarketView.dart';
 import 'package:provider/provider.dart';
