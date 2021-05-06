@@ -158,7 +158,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   ),
                                   child: IconButton(
                                     onPressed: () {
-                                      print("holahola");
+                                      if (_imageFile != null) {
+                                        StorageService ss =
+                                            context.read<StorageService>();
+                                        ss
+                                            .uploadImageToFirebase(
+                                                context, _imageFile)
+                                            .then((value1) {
+                                          ss
+                                              .getDownloadUrl(context, value1)
+                                              .then((value) {
+                                            UserHelper.updateProfilePic(
+                                                    firebaseUser.uid, value)
+                                                .then((value) {
+                                              print('Data updated');
+                                              int count = 0;
+                                              Navigator.of(context)
+                                                ..popUntil((_) => count++ >= 2);
+                                            });
+                                          });
+                                        });
+                                      } else {
+                                        print('No file');
+                                      }
                                     },
                                     icon: new Icon(
                                       Icons.edit,
@@ -189,7 +211,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             suffixIcon: IconButton(
                               onPressed: () {
-                                print("holahola");
+                                if (myNameController.text.length > 0) {
+                                  UserHelper.updateUserName(firebaseUser.uid,
+                                          myNameController.text)
+                                      .then((value) {
+                                    print('Data updated');
+                                    int count = 0;
+                                    Navigator.of(context)
+                                      ..popUntil((_) => count++ >= 2);
+                                  });
+                                } else {
+                                  print('no new name');
+                                }
                               },
                               icon: Icon(Icons.save),
                             ),
@@ -212,7 +245,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             suffixIcon: IconButton(
                               onPressed: () {
-                                print("holahola");
+                                if (myCityController.text.length > 0) {
+                                  UserHelper.updateCity(firebaseUser.uid,
+                                          myCityController.text)
+                                      .then((value) {
+                                    print('Data updated');
+                                    int count = 0;
+                                    Navigator.of(context)
+                                      ..popUntil((_) => count++ >= 2);
+                                  });
+                                } else {
+                                  print('no new name');
+                                }
                               },
                               icon: Icon(Icons.save),
                             ),
@@ -235,7 +279,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             suffixIcon: IconButton(
                               onPressed: () {
-                                print("holahola");
+                                if (myPhoneController.text.length > 0) {
+                                  UserHelper.updatePhone(firebaseUser.uid,
+                                          myPhoneController.text)
+                                      .then((value) {
+                                    print('Data updated');
+                                    int count = 0;
+                                    Navigator.of(context)
+                                      ..popUntil((_) => count++ >= 2);
+                                  });
+                                } else {
+                                  print('no new name');
+                                }
                               },
                               icon: Icon(Icons.save),
                             ),
