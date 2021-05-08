@@ -10,3 +10,9 @@ const kWarninngColor = Color(0xFFF3BB1C);
 const kErrorColor = Color(0xFFF03738);
 
 const kDefaultPadding = 20.0;
+
+class Constants {
+  Constants._();
+  static const double padding = 20;
+  static const double avatarRadius = 45;
+}
