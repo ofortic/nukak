@@ -3,6 +3,7 @@ import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/chat/screens/chats/chats_screen.dart';
 import 'package:nukak/view/profile/Login/change_password.dart';
 import 'package:nukak/view/profile/Login/register_as_seller.dart';
+import 'package:nukak/view/profile/Login/createShop.dart';
 import 'package:nukak/view/profile/profile.dart';
 import 'package:provider/provider.dart';
 import 'profile_menu.dart';
@@ -189,6 +190,17 @@ class BodyCraftsman extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => ChatsScreenCraftsman(),
+                ),
+              );
+            },
+          ),
+          ProfileMenu(
+            text: "Crear tienda",
+            icon: "assets/images/add.png",
+            press: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => CreateShop(),
                 ),
               );
             },

@@ -12,9 +12,10 @@ import 'package:nukak/controller/db.dart' as db;
 import '../../../constants.dart';
 import 'Dialog.dart';
 
-class RegisterSeller extends StatelessWidget {
+class CreateShop extends StatelessWidget {
   @override
   String description;
+  String name;
   File _imageFile;
 
   final picker = ImagePicker();
@@ -84,14 +85,63 @@ class RegisterSeller extends StatelessWidget {
                 ),
               ),
               Text(
-                "Gracias por querer ser parte de Nukak, para iniciar tu inscripción, por favor ingresa los siguientes datos:",
+                "Gracias por querer ser parte de Nukak, para crear su tienda ingrese cada uno de los campos solicitados a continuacion:",
                 textAlign: TextAlign.center,
               ),
               SizedBox(
                 height: 35,
               ),
               Container(
-                width: 170,
+                width: MediaQuery.of(context).size.width * 0.65,
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO(168, 84, 27, 1),
+                    borderRadius: BorderRadius.all(Radius.circular(25))),
+                child: Row(
+                  children: [
+                    SizedBox(width: 10),
+                    Icon(Icons.add_a_photo_rounded),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                print('button is pressed');
+                                _showPicker(context);
+                              },
+                              child: Text(
+                                "Añadir Imagen de la tienda",
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black54),
+                              )),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              RoundedInputField(
+                hintText: "Nombre de tu tienda",
+                onChanged: (value) {
+                  name = value;
+                },
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              RoundedInputField(
+                hintText: "Descripcion de tu tienda",
+                onChanged: (value) {
+                  description = value;
+                },
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
                 decoration: BoxDecoration(
                     color: kPrimaryColor,
                     borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -99,52 +149,10 @@ class RegisterSeller extends StatelessWidget {
                   borderRadius: BorderRadius.circular(29),
                   child: TextButton(
                     onPressed: () {
-                      _showPicker(context);
-                    },
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(Icons.add_a_photo_rounded, color: Colors.black),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Adjuntar fotos",
-                          style: TextStyle(
-                              color: new Color.fromRGBO(0, 0, 0, 0.5)),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              RoundedInputField(
-                hintText: "Descripcion de tu empresa",
-                onChanged: (value) {
-                  description = value;
-                },
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
-                width: MediaQuery.of(context).size.width * 0.6,
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(29),
-                  child: FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                    color: kPrimaryColor,
-                    onPressed: () {
-                      db
-                          .sendRequest(Request(firebaseUser.uid, description))
-                          .then((value) => Navigator.of(context).pop());
+                      print('didPress create shop');
                     },
                     child: Text(
-                      "Registrarme",
+                      "Crear tienda",
                       style: TextStyle(color: new Color.fromRGBO(0, 0, 0, 0.5)),
                     ),
                   ),
