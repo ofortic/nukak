@@ -4,69 +4,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
-class CustomDialogBox extends StatefulWidget {
+class CustomDialogDelete extends StatefulWidget {
   final String title, descriptions, text;
   final Image img;
 
-  const CustomDialogBox(
+  const CustomDialogDelete(
       {Key key, this.title, this.descriptions, this.text, this.img})
       : super(key: key);
 
   @override
-  _CustomDialogBoxState createState() => _CustomDialogBoxState();
+  _CustomDialogDeleteState createState() => _CustomDialogDeleteState();
 }
 
-class _CustomDialogBoxState extends State<CustomDialogBox> {
-  List<Asset> images = <Asset>[];
-  String _error = 'No Error Dectected';
-
-  Widget buildGridView() {
-    return GridView.count(
-      crossAxisCount: 3,
-      children: List.generate(images.length, (index) {
-        Asset asset = images[index];
-        return AssetThumb(
-          asset: asset,
-          width: 300,
-          height: 300,
-        );
-      }),
-    );
-  }
-
-  Future<void> loadAssets() async {
-    List<Asset> resultList = <Asset>[];
-    String error = 'No Error Detected';
-
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 300,
-        enableCamera: true,
-        selectedAssets: images,
-        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-        materialOptions: MaterialOptions(
-          actionBarColor: "#a8531b",
-          actionBarTitle: "Nukak",
-          allViewTitle: "All Photos",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#000000",
-        ),
-      );
-    } on Exception catch (e) {
-      error = e.toString();
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      images = resultList;
-      _error = error;
-    });
-  }
-
+class _CustomDialogDeleteState extends State<CustomDialogDelete> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -104,7 +54,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 widget.title,
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
               ),
-              /*
               SizedBox(
                 height: 15,
               ),
@@ -112,45 +61,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 widget.descriptions,
                 style: TextStyle(fontSize: 14),
                 textAlign: TextAlign.center,
-              ),*/
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(168, 84, 27, 1),
-                    borderRadius: BorderRadius.all(Radius.circular(25))),
-                child: TextButton(
-                    onPressed: () {
-                      loadAssets();
-                    },
-                    child: Text(
-                      "Añadir Imagenes",
-                      style: TextStyle(fontSize: 14, color: Colors.white),
-                    )),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Nombre del producto',
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Descripcion',
-                ),
-              ),
-              SizedBox(
-                height: 22,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

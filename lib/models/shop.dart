@@ -14,6 +14,13 @@ class Shop {
         description = doc.data()['description'],
         url = doc.data()['url'],
         active = doc.data()['active'];
+  Shop.fromUniqueFirestore(Map<String, dynamic> doc, String shopId)
+      : id = shopId,
+        name = doc['name'],
+        userId = doc['userId'],
+        description = doc['description'],
+        url = doc['url'],
+        active = doc['active'];
   Map<String, dynamic> toFirestore() => {
         'userId': userId,
         'name': name,

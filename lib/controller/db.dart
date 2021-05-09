@@ -27,6 +27,13 @@ Stream<List<Shop>> getMyShops(String user) {
       .map(toShopList);
 }
 
+// GET A SHOP
+Future<Shop> getShop(String shopId) async {
+  final shopRef = FirebaseFirestore.instance.collection('shops').doc(shopId);
+  final sh = await shopRef.get();
+  return Shop.fromUniqueFirestore(sh.data(), shopId);
+}
+
 // CREATE NEW SHOP
 Future<void> sendShop(Shop sh) async {
   await FirebaseFirestore.instance
@@ -97,12 +104,55 @@ Future<void> sendChat(Chat ch) async {
     print(e.toString());
   });
 }
+
+Future<void> updateChatLastMessage(String chat, String lastMessage) async {
+  final userRef = FirebaseFirestore.instance.collection("chats").doc(chat);
+  if ((await userRef.get()).exists) {
+    await userRef.update({'lastMessage': lastMessage});
+  } else {}
+}
+
+/*Future<void> updateChatDatetime(String chat, String lastMessage) async {
+  final userRef = FirebaseFirestore.instance.collection("chats").doc(chat);
+  if ((await userRef.get()).exists) {
+    await userRef.update({'lastMessage': lastMessage});
+  } else {}
+}*/
+
+//  CHECK IF A SHOP IS A FAVOURITE
+Future<List<Chat>> queryChat(
+    String userId, String craftsmanId, String productId) async {
+  final validationQuery = await FirebaseFirestore.instance
+      .collection('chats')
+      .where('craftsmanId', isEqualTo: craftsmanId)
+      .where('userId', isEqualTo: userId)
+      .where('productId', isEqualTo: productId)
+      .snapshots()
+      .map(toChatList);
+
+  /*print(.toString());
+  final ans = true;
+  print(ans);*/
+  return validationQuery.first;
+}
+
+Future<List<Chat>> isThereAChat(
+    String userId, String craftsmanId, String productId) async {
+  final validationQuery = await queryChat(userId, craftsmanId, productId);
+  if (craftsmanId == userId) return null;
+
+  /*print(.toString());
+  final ans = true;
+  print(ans);*/
+  return validationQuery;
+}
 //MESSAGES--------------------------------------------------
 
 //GET THE MESSAGES OF A CHAT
 Stream<List<Message>> getMessages(String chatId) {
   return FirebaseFirestore.instance
       .collection('chats/$chatId/messages')
+      .orderBy('datetime')
       .snapshots()
       .map(toMessageList);
 }
@@ -135,6 +185,39 @@ Future<void> sendFavourite(String userId, Favourite fv) async {
       .catchError((e) {
     print(e.toString());
   });
+}
+
+//  CHECK IF A SHOP IS A FAVOURITE
+Future<List<Favourite>> queryFavourite(String userId, String shopId) async {
+  final validationQuery = await FirebaseFirestore.instance
+      .collection('users/$userId/favourites')
+      .where('shopId', isEqualTo: shopId)
+      .where('userId', isEqualTo: userId)
+      .snapshots()
+      .map(toFavouriteList);
+
+  /*print(.toString());
+  final ans = true;
+  print(ans);*/
+  return validationQuery.first;
+}
+
+Future<bool> isFavourite(String userId, String shopId) async {
+  final validationQuery = await queryFavourite(userId, shopId);
+
+  /*print(.toString());
+  final ans = true;
+  print(ans);*/
+  return validationQuery.length != 0;
+}
+
+//DELETE A FAVOURITE
+Future<void> deleteFavorurite(String userId, String shopId) async {
+  final fav = await queryFavourite(userId, shopId);
+  await FirebaseFirestore.instance
+      .collection('users/$userId/favourites')
+      .doc(fav.first.id)
+      .delete();
 }
 //REPORTS--------------------------------------------------
 

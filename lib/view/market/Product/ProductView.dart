@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:nukak/models/product.dart';
 import 'package:nukak/view/home/HomeView.dart';
 import 'package:nukak/view/market/MarketView.dart';
-import '../../../constants.dart';
+import 'package:nukak/view/market/Product/components/custom_dialog_delete.dart';
 import 'components/body.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:nukak/view/market/Product/components/custom_dialog_box.dart';
@@ -51,11 +51,19 @@ class _ProductViewState extends State<ProductView>
           builder: (context) {
             return CustomDialogBox(
                 title: "Editar producto",
-                descriptions:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at ante ante. Quisque egestas a ligula nec dapibus. Donec sit amet lacus eget nisi ultricies ullamcorper. Fusce pulvinar rhoncus neque et mollis. Nunc aliquam cursus dolor, sit amet lobortis nunc dignissim eu. Aliquam cursus a ante sed condimentum. ",
+                descriptions: "Lorem ipsum",
                 text: "ok");
           });
-    } else {}
+    } else {
+      return await showDialog(
+          context: context,
+          builder: (context) {
+            return CustomDialogBox(
+                title: "Editar producto",
+                descriptions: "Lorem ipsum",
+                text: "ok");
+          });
+    }
   }
 
   Future<void> showDeleteDialog(BuildContext context, bool isAndroid) async {
@@ -63,52 +71,21 @@ class _ProductViewState extends State<ProductView>
       return await showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
-              title: Text("Eliminar producto",
-                  style: TextStyle(fontSize: 16, color: Colors.white)),
-              content: Text(
-                  "Desea eliminar este producto? esta accion es irreversible...",
-                  style: TextStyle(fontSize: 12, color: Colors.white)),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      print("did press yes");
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Si")),
-                TextButton(
-                    onPressed: () {
-                      print("did pres no");
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("No"))
-              ],
-              backgroundColor: Color.fromRGBO(168, 84, 27, 1),
-            );
+            return CustomDialogDelete(
+                title: "Eliminar producto",
+                descriptions:
+                    "Esta seguro que desea eliminar este producto? \nEsta accion es irreversible...",
+                text: "ok");
           });
     } else {
       return await showDialog(
           context: context,
           builder: (context) {
-            return CupertinoAlertDialog(
-              title: Text("Eliminar producto"),
-              content: Text(
-                  "Desea eliminar este producto? esta accion es irreversible..."),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      print("did press yes");
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Si")),
-                TextButton(
-                    onPressed: () {
-                      print("did pres no");
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("No"))
-              ],
-            );
+            return CustomDialogDelete(
+                title: "Eliminar producto",
+                descriptions:
+                    "Esta seguro que desea eliminar este producto? \nEsta accion es irreversible...",
+                text: "ok");
           });
     }
   }

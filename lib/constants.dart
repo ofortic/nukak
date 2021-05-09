@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const kPrimaryColor = Color.fromRGBO(168, 84, 27, 1);
 const kPrimaryLightColor = Color(0xFFF1E6FF);
+const kFavoriteCellColor = Color.fromRGBO(158, 105, 70, 1);
 
 const kSecondaryColor = Color(0xFFFE9901);
 const kContentColorLightTheme = Color(0xFF1D1D35);
