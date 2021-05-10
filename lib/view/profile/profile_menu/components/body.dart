@@ -4,6 +4,7 @@ import 'package:nukak/view/chat/screens/chats/chats_screen.dart';
 import 'package:nukak/view/profile/Login/change_password.dart';
 import 'package:nukak/view/profile/Login/register_as_seller.dart';
 import 'package:nukak/view/profile/Login/createShop.dart';
+import 'package:nukak/view/profile/Login/review_requests.dart';
 import 'package:nukak/view/profile/profile.dart';
 import 'package:provider/provider.dart';
 import 'profile_menu.dart';
@@ -266,7 +267,7 @@ class BodyAdmin extends StatelessWidget {
             press: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => RegisterSeller(),
+                  builder: (context) => ReviewRequests(),
                 ),
               );
             },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const kPrimaryColor = Color.fromRGBO(168, 84, 27, 1);
+const kPrimaryColorAlpha = Color.fromRGBO(168, 84, 27, 0.5);
 const kPrimaryLightColor = Color(0xFFF1E6FF);
 const kFavoriteCellColor = Color.fromRGBO(158, 105, 70, 1);
 
