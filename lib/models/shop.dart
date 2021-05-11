@@ -28,9 +28,7 @@ class Shop {
         'url': url,
         'description': description
       };
-  Shop(this.name, this.userId, this.description)
-      : url = 'none',
-        active = true;
+  Shop(this.name, this.userId, this.description, this.url) : active = true;
 }
 
 List<Shop> toShopList(QuerySnapshot query) {

@@ -104,10 +104,10 @@ class LoginView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SocialIcon(
+                  /*SocialIcon(
                     iconSrt: "assets/images/facebook.png",
                     press: () {},
-                  ),
+                  ),*/
                   SocialIcon(
                     iconSrt: "assets/images/google.png",
                     press: () {

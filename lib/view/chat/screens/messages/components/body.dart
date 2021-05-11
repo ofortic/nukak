@@ -32,6 +32,7 @@ class Body extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                 child: ListView.builder(
+                  reverse: true,
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) =>
                       MessageBox(message: snapshot.data[index]),

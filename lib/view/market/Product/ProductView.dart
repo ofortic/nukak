@@ -1,10 +1,12 @@
 import 'dart:ffi';
 import 'dart:io' show Platform;
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import 'package:nukak/models/product.dart';
+import 'package:nukak/models/shop.dart';
 import 'package:nukak/view/home/HomeView.dart';
 import 'package:nukak/view/market/MarketView.dart';
 import 'package:nukak/view/market/Product/components/custom_dialog_delete.dart';
@@ -42,17 +44,19 @@ class _ProductViewState extends State<ProductView>
     super.initState();
   }
 
-  Widget editProductView() {}
-
-  Future<void> showEditDialog(BuildContext context, bool isAndroid) async {
+  Future<void> showEditDialog(
+      BuildContext context, bool isAndroid, Product pr) async {
     if (isAndroid) {
       return await showDialog(
           context: context,
           builder: (context) {
-            return CustomDialogBox(
-                title: "Editar producto",
-                descriptions: "Lorem ipsum",
-                text: "ok");
+            return CustomDialogBoxUpdate(
+              title: "Editar producto",
+              descriptions: "Lorem ipsum",
+              text: "ok",
+              ancestorContext: context,
+              product: pr,
+            );
           });
     } else {
       return await showDialog(
@@ -66,16 +70,20 @@ class _ProductViewState extends State<ProductView>
     }
   }
 
-  Future<void> showDeleteDialog(BuildContext context, bool isAndroid) async {
+  Future<void> showDeleteDialog(
+      BuildContext context, bool isAndroid, Product pr) async {
     if (isAndroid) {
       return await showDialog(
           context: context,
           builder: (context) {
             return CustomDialogDelete(
-                title: "Eliminar producto",
-                descriptions:
-                    "Esta seguro que desea eliminar este producto? \nEsta accion es irreversible...",
-                text: "ok");
+              title: "Eliminar producto",
+              descriptions:
+                  "Esta seguro que desea eliminar este producto? \nEsta accion es irreversible...",
+              text: "ok",
+              ancestorContext: context,
+              product: pr,
+            );
           });
     } else {
       return await showDialog(
@@ -92,6 +100,7 @@ class _ProductViewState extends State<ProductView>
 
   @override
   Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User>();
     return Scaffold(
       backgroundColor: Color.fromRGBO(226, 215, 171, 1),
       appBar: getAppBarHome(context),
@@ -99,7 +108,7 @@ class _ProductViewState extends State<ProductView>
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
 
       //Init Floating Action Bubble
-      floatingActionButton: isAdmin
+      floatingActionButton: widget.product.userId == firebaseUser.uid
           ? FloatingActionBubble(
               // Menu items
               items: <Bubble>[
@@ -114,9 +123,9 @@ class _ProductViewState extends State<ProductView>
                     _animationController.reverse();
                     if (Platform.isAndroid) {
                       print("Cuadro estamos en Android");
-                      showEditDialog(context, true);
+                      showEditDialog(context, true, widget.product);
                     } else {
-                      showEditDialog(context, false);
+                      showEditDialog(context, false, widget.product);
                     }
                   },
                 ),
@@ -130,9 +139,9 @@ class _ProductViewState extends State<ProductView>
                   onPress: () async {
                     _animationController.reverse();
                     if (Platform.isAndroid) {
-                      await showDeleteDialog(context, true);
+                      await showDeleteDialog(context, true, widget.product);
                     } else {
-                      await showDeleteDialog(context, false);
+                      await showDeleteDialog(context, false, widget.product);
                     }
                   },
                 ),

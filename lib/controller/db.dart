@@ -75,6 +75,31 @@ Future<void> deleteProduct(String shopId, Product pr) async {
       .doc(pr.id)
       .delete();
 }
+
+//UPDATE A PRODUCTS NAME
+Future<void> updateProductName(String shop, String product, String name) async {
+  final userRef = FirebaseFirestore.instance
+      .collection("shops")
+      .doc(shop)
+      .collection('products')
+      .doc(product);
+  if ((await userRef.get()).exists) {
+    await userRef.update({'name': name});
+  } else {}
+}
+
+//UPDATE A PRODUCTS DESCRIPTION
+Future<void> updateProductDescription(
+    String shop, String product, String description) async {
+  final userRef = FirebaseFirestore.instance
+      .collection("shops")
+      .doc(shop)
+      .collection('products')
+      .doc(product);
+  if ((await userRef.get()).exists) {
+    await userRef.update({'description': description});
+  } else {}
+}
 //CHATS--------------------------------------------------
 
 //GET MY CHATS IF IM A USER
@@ -105,6 +130,7 @@ Future<void> sendChat(Chat ch) async {
   });
 }
 
+// UDPDATE CHAT LAST MESSAGE
 Future<void> updateChatLastMessage(String chat, String lastMessage) async {
   final userRef = FirebaseFirestore.instance.collection("chats").doc(chat);
   if ((await userRef.get()).exists) {

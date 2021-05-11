@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/controller/storage_service.dart';
 import 'package:nukak/models/request.dart';
+import 'package:nukak/models/shop.dart';
 import 'package:nukak/view/market/MarketView.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -62,6 +64,7 @@ class CreateShop extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
+    StorageService ss = context.read<StorageService>();
     return Scaffold(
       backgroundColor: Color.fromRGBO(226, 215, 171, 1),
       appBar: getAppBarHome(context),
@@ -149,7 +152,25 @@ class CreateShop extends StatelessWidget {
                   borderRadius: BorderRadius.circular(29),
                   child: TextButton(
                     onPressed: () {
-                      print('didPress create shop');
+                      if (_imageFile != null &&
+                          description.trim().length > 0 &&
+                          name.trim().length > 0) {
+                        ss
+                            .uploadImageToFirebase(context, _imageFile)
+                            .then((value) {
+                          ss.getDownloadUrl(context, value).then((value1) {
+                            db
+                                .sendShop(Shop(name, firebaseUser.uid,
+                                    description, value1))
+                                .then((value) {
+                              print('shop created');
+                              Navigator.of(context).pop();
+                            });
+                          });
+                        });
+                      } else {
+                        print('invalid');
+                      }
                     },
                     child: Text(
                       "Crear tienda",

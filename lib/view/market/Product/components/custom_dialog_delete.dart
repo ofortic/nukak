@@ -1,22 +1,28 @@
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nukak/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:nukak/models/product.dart';
+import 'package:provider/provider.dart';
+import 'package:nukak/controller/db.dart' as db;
 
-class CustomDialogDelete extends StatefulWidget {
+class CustomDialogDelete extends StatelessWidget {
   final String title, descriptions, text;
   final Image img;
-
+  final Product product;
+  final BuildContext ancestorContext;
   const CustomDialogDelete(
-      {Key key, this.title, this.descriptions, this.text, this.img})
+      {Key key,
+      this.title,
+      this.descriptions,
+      this.text,
+      this.img,
+      this.ancestorContext,
+      this.product})
       : super(key: key);
 
-  @override
-  _CustomDialogDeleteState createState() => _CustomDialogDeleteState();
-}
-
-class _CustomDialogDeleteState extends State<CustomDialogDelete> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -30,6 +36,7 @@ class _CustomDialogDeleteState extends State<CustomDialogDelete> {
   }
 
   contentBox(context) {
+    final firebaseUser = ancestorContext.watch<User>();
     return Stack(
       children: <Widget>[
         Container(
@@ -51,14 +58,14 @@ class _CustomDialogDeleteState extends State<CustomDialogDelete> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
-                widget.title,
+                title,
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
               ),
               SizedBox(
                 height: 15,
               ),
               Text(
-                widget.descriptions,
+                descriptions,
                 style: TextStyle(fontSize: 14),
                 textAlign: TextAlign.center,
               ),
@@ -68,9 +75,7 @@ class _CustomDialogDeleteState extends State<CustomDialogDelete> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
+                        onPressed: () {},
                         child: Text(
                           "No",
                           style: TextStyle(fontSize: 18, color: kPrimaryColor),
@@ -80,8 +85,13 @@ class _CustomDialogDeleteState extends State<CustomDialogDelete> {
                     alignment: Alignment.centerLeft,
                     child: TextButton(
                         onPressed: () {
-                          print("Did press yes");
-                          Navigator.of(context).pop();
+                          db
+                              .deleteProduct(product.shopId, product)
+                              .then((value) {
+                            int count = 0;
+                            Navigator.of(context)
+                              ..popUntil((_) => count++ >= 2);
+                          });
                           //loadAssets();
                         },
                         child: Text(

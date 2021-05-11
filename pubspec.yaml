@@ -45,6 +45,7 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   floating_action_bubble: 1.0.9
   multi_image_picker: ^4.8.0
+  flutter_absolute_path: ^1.0.6
 
 
 dev_dependencies:
