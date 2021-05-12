@@ -266,10 +266,19 @@ Future<void> sendReport(Report re) async {
 }
 //REQUEST--------------------------------------------------
 
-//GET MY REQUEST
+//GET ALL THE REQUEST
 Stream<List<Request>> getRequest() {
   return FirebaseFirestore.instance
       .collection('/requests')
+      .snapshots()
+      .map(toRequestList);
+}
+
+//GET MY REQUEST
+Stream<List<Request>> getMyRequest(String uid) {
+  return FirebaseFirestore.instance
+      .collection('/requests')
+      .where('userId', isEqualTo: uid)
       .snapshots()
       .map(toRequestList);
 }
@@ -282,4 +291,22 @@ Future<void> sendRequest(Request re) async {
       .catchError((e) {
     print(e.toString());
   });
+}
+
+//UPDATE CHECKED STATE
+Future<void> updateChecked(String request) async {
+  final userRef =
+      FirebaseFirestore.instance.collection("requests").doc(request);
+  if ((await userRef.get()).exists) {
+    await userRef.update({'checked': true});
+  } else {}
+}
+
+//UPDATE APPROVED STATE
+Future<void> updateApproved(String request) async {
+  final userRef =
+      FirebaseFirestore.instance.collection("requests").doc(request);
+  if ((await userRef.get()).exists) {
+    await userRef.update({'approved': true});
+  } else {}
 }

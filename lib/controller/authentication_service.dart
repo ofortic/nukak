@@ -169,6 +169,13 @@ class UserHelper {
     } else {}
   }
 
+  static updateRole(String user, String role) async {
+    final userRef = db.collection("users").doc(user);
+    if ((await userRef.get()).exists) {
+      await userRef.update({'role': role});
+    } else {}
+  }
+
   static Future<bool> validatePassword(
       User firebaseUser, String password) async {
     var authCredentials = EmailAuthProvider.credential(

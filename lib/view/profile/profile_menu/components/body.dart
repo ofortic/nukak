@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/chat/screens/chats/chats_screen.dart';
 import 'package:nukak/view/profile/Login/change_password.dart';
+import 'package:nukak/view/profile/Login/my_shops.dart';
 import 'package:nukak/view/profile/Login/register_as_seller.dart';
 import 'package:nukak/view/profile/Login/createShop.dart';
 import 'package:nukak/view/profile/Login/review_requests.dart';
@@ -134,7 +135,7 @@ class BodyUser extends StatelessWidget {
             press: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => RegisterSeller(),
+                  builder: (context) => MyRequest(),
                 ),
               );
             },
@@ -207,6 +208,17 @@ class BodyCraftsman extends StatelessWidget {
             },
           ),
           ProfileMenu(
+            text: "Mis Tiendas",
+            icon: "assets/images/add.png",
+            press: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => HomeViewCraftsman(),
+                ),
+              );
+            },
+          ),
+          ProfileMenu(
             text: "Cambiar contraseña",
             icon: "assets/images/padlock.png",
             press: () {
@@ -267,12 +279,12 @@ class BodyAdmin extends StatelessWidget {
             press: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ReviewRequests(),
+                  builder: (context) => AllRequests(),
                 ),
               );
             },
           ),
-          ProfileMenu(
+          /*ProfileMenu(
             text: "Revisar reportes",
             icon: "assets/images/trade.png",
             press: () {
@@ -282,7 +294,7 @@ class BodyAdmin extends StatelessWidget {
                 ),
               );
             },
-          ),
+          ),*/
           ProfileMenu(
             text: "Cerrar sesión",
             icon: "assets/images/logout.png",

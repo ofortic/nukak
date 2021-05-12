@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/controller/authentication_service.dart';
+import 'package:nukak/controller/storage_service.dart';
 import 'package:nukak/models/request.dart';
 import 'package:nukak/view/market/MarketView.dart';
 import 'package:image_picker/image_picker.dart';
@@ -61,6 +63,7 @@ class RegisterSeller extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
+    StorageService ss = context.read<StorageService>();
     return Scaffold(
       backgroundColor: Color.fromRGBO(226, 215, 171, 1),
       appBar: getAppBarHome(context),
@@ -139,9 +142,20 @@ class RegisterSeller extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                     color: kPrimaryColor,
                     onPressed: () {
-                      db
-                          .sendRequest(Request(firebaseUser.uid, description))
-                          .then((value) => Navigator.of(context).pop());
+                      if (_imageFile != null && description.trim().length > 0) {
+                        ss
+                            .uploadImageToFirebase(context, _imageFile)
+                            .then((value1) {
+                          ss.getDownloadUrl(context, value1).then((value) {
+                            db
+                                .sendRequest(Request(
+                                    firebaseUser.uid, description, value))
+                                .then((value) => Navigator.of(context).pop());
+                          });
+                        });
+                      } else {
+                        print('invalid');
+                      }
                     },
                     child: Text(
                       "Registrarme",
