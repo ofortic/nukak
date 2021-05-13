@@ -14,6 +14,13 @@ class Shop {
         description = doc.data()['description'],
         url = doc.data()['url'],
         active = doc.data()['active'];
+  Shop.fromUniqueFirestore(Map<String, dynamic> doc, String shopId)
+      : id = shopId,
+        name = doc['name'],
+        userId = doc['userId'],
+        description = doc['description'],
+        url = doc['url'],
+        active = doc['active'];
   Map<String, dynamic> toFirestore() => {
         'userId': userId,
         'name': name,
@@ -21,9 +28,7 @@ class Shop {
         'url': url,
         'description': description
       };
-  Shop(this.name, this.userId, this.description)
-      : url = 'none',
-        active = true;
+  Shop(this.name, this.userId, this.description, this.url) : active = true;
 }
 
 List<Shop> toShopList(QuerySnapshot query) {

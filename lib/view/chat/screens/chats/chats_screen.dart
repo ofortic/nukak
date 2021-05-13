@@ -1,5 +1,6 @@
 import 'package:nukak/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:nukak/view/market/MarketView.dart';
 
 import '../../../../constants.dart';
 import 'components/body.dart';
@@ -10,17 +11,49 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: getAppBarHome(context),
       body: Body(),
-      bottomNavigationBar: buildBottomNavigationBar(),
+      //bottomNavigationBar: buildBottomNavigationBar(),
     );
   }
 
-  BottomNavigationBar buildBottomNavigationBar() {
+  AppBar buildAppBar() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      title: Text("Chats"),
+      backgroundColor: kPrimaryColor,
+    );
+  }
+}
+
+class ChatsScreenCraftsman extends StatefulWidget {
+  @override
+  _ChatsScreenStateCraftsman createState() => _ChatsScreenStateCraftsman();
+}
+
+class _ChatsScreenStateCraftsman extends State<ChatsScreenCraftsman> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: getAppBarHome(context),
+      body: BodyCraftsman(),
+      //bottomNavigationBar: buildBottomNavigationBar(),
+    );
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      title: Text("Chats"),
+      backgroundColor: kPrimaryColor,
+    );
+  }
+}
+
+/*BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       currentIndex: _selectedIndex,
@@ -34,13 +67,4 @@ class _ChatsScreenState extends State<ChatsScreen> {
         BottomNavigationBarItem(icon: Icon(Icons.people), label: "Personas"),
       ],
     );
-  }
-
-  AppBar buildAppBar() {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      title: Text("Chats"),
-      backgroundColor: kPrimaryColor,
-    );
-  }
-}
+  }*/

@@ -1,13 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nukak/constants.dart';
 import 'package:nukak/models/product.dart';
 import 'package:nukak/models/shop.dart';
-
+import 'package:provider/provider.dart';
 import 'package:nukak/controller/db.dart' as db;
 import 'package:nukak/view/home/loading_circle.dart';
 import 'package:nukak/view/home/snerror.dart';
 import 'package:nukak/view/market/Product/ProductView.dart';
+import 'package:nukak/view/market/Product/components/custom_dialog_box.dart';
+import 'package:provider/provider.dart';
 
 class MarketView extends StatelessWidget {
   final Shop shop;
@@ -16,36 +19,17 @@ class MarketView extends StatelessWidget {
   MarketView({Key key, @required this.shop}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User>();
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(226, 215, 171, 1),
       appBar: getAppBarHome(context),
-      body: getBody(context, shop),
+      body: getBody(context, shop, firebaseUser),
     );
   }
 }
 
-Widget getBodyTest(BuildContext context, Shop shop) {
-  return Container(
-    height: MediaQuery.of(context).size.height,
-    width: MediaQuery.of(context).size.width,
-    decoration: BoxDecoration(
-      image: DecorationImage(
-          image: AssetImage("assets/images/Background.png"), fit: BoxFit.cover),
-    ),
-    child: ListView(
-      children: <Widget>[
-        getProfilePhoto(context, shop),
-        getDescription(shop, context),
-        Container(
-          child: getList(shop),
-        ),
-      ],
-    ),
-    //child: getList(shop),
-  );
-}
-
-Widget getBody(BuildContext context, Shop shop) {
+Widget getBody(BuildContext context, Shop shop, User fbu) {
   return Container(
     height: MediaQuery.of(context).size.height,
     width: MediaQuery.of(context).size.width,
@@ -56,21 +40,20 @@ Widget getBody(BuildContext context, Shop shop) {
     child: Column(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height / 3,
+          height: MediaQuery.of(context).size.height * 0.38,
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
               getProfilePhoto(context, shop),
-              getDescription(shop, context),
+              SizedBox(height: 10),
+              if (fbu.uid == shop.userId) getDescription(shop, context),
+              if (fbu.uid != shop.userId) getDescriptionUser(shop, context),
             ],
           ),
         ),
         Expanded(
-          child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: getList(shop)),
-        )
+          child: getList(shop),
+        ),
       ],
     ),
   );
@@ -78,7 +61,7 @@ Widget getBody(BuildContext context, Shop shop) {
 
 Widget getProfilePhoto(BuildContext context, Shop shop) {
   return Container(
-    margin: EdgeInsets.symmetric(vertical: 10),
+    margin: EdgeInsets.symmetric(vertical: 5),
     padding: EdgeInsets.all(10.0),
     width: MediaQuery.of(context).size.width / 2.5,
     height: MediaQuery.of(context).size.width / 2.5,
@@ -94,16 +77,74 @@ Widget getProfilePhoto(BuildContext context, Shop shop) {
   );
 }
 
+Future<void> showEditDialog(
+    BuildContext context, bool isAndroid, Shop sh) async {
+  if (isAndroid) {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return CustomDialogBox(
+            title: "Añadir producto",
+            descriptions: "Lorem ipsum",
+            text: "ok",
+            ancestorContext: context,
+            shop: sh,
+          );
+        });
+  } else {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return CustomDialogBox(
+              title: "Editar producto",
+              descriptions: "Lorem ipsum",
+              text: "ok");
+        });
+  }
+}
+
 Widget getDescription(Shop shop, context) {
   return Center(
+    child: Column(
+      children: [
+        Text(shop.description,
+            style: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+            textAlign: TextAlign.center),
+        SizedBox(height: 10),
+        Container(
+          decoration: BoxDecoration(
+              color: Color.fromRGBO(168, 84, 27, 1),
+              borderRadius: BorderRadius.all(Radius.circular(25))),
+          child: TextButton(
+              onPressed: () {
+                showEditDialog(context, true, shop);
+              },
+              child: Text(
+                "Añadir Producto",
+                style: TextStyle(fontSize: 14, color: Colors.white),
+              )),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget getDescriptionUser(Shop shop, context) {
+  return Center(
     child: Padding(
-      padding: const EdgeInsets.only(left: 0, right: 0, top: 25, bottom: 5),
-      child: Text(shop.description,
-          style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width * 0.05,
-              fontWeight: FontWeight.bold,
-              color: Colors.black),
-          textAlign: TextAlign.center),
+      padding: const EdgeInsets.only(left: 0, right: 0, top: 20, bottom: 0),
+      child: Column(
+        children: [
+          Text(shop.description,
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+              textAlign: TextAlign.center),
+          SizedBox(height: 10),
+        ],
+      ),
     ),
   );
 }
@@ -152,7 +193,7 @@ Widget shopCellImage(BuildContext context, Product p) {
           width: MediaQuery.of(context).size.width * 0.9,
           decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/logonukak.png'),
+                image: NetworkImage(p.url.split(',')[0]),
                 fit: BoxFit.cover), //NetworkImage(sh.url), fit: BoxFit.cover),
             color: Color(0xFFFFBB65),
             border: Border.all(color: Colors.black12),

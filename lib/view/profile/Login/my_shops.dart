@@ -4,20 +4,20 @@ import 'package:flutter/rendering.dart';
 import 'package:nukak/controller/db.dart' as db;
 import 'package:nukak/models/favourite.dart';
 import 'package:nukak/models/shop.dart';
+import 'package:nukak/view/home/loading_circle.dart';
 import 'package:nukak/view/home/snerror.dart';
 import 'package:nukak/view/market/MarketView.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../constants.dart';
-import 'loading_circle.dart';
+import '../../../constants.dart';
 
-class HomeView extends StatefulWidget {
+class HomeViewCraftsman extends StatefulWidget {
   @override
-  _HomeViewState createState() => _HomeViewState();
+  _HomeViewCraftsmanState createState() => _HomeViewCraftsmanState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewCraftsmanState extends State<HomeViewCraftsman> {
   var _controller = ScrollController();
   ScrollPhysics _physics = ClampingScrollPhysics();
   bool _showAppbar = true;
@@ -69,7 +69,7 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: Color(0xFFE4D5C2),
         appBar: getAppBarHome(),
         body: StreamBuilder(
-          stream: db.getShops(),
+          stream: db.getMyShops(firebaseUser.uid),
           builder: (context, AsyncSnapshot<List<Shop>> snapshot) {
             if (snapshot.hasError) {
               return SnapshotError(snapshot.error);

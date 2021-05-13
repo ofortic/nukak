@@ -1,15 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/favorites/FavoriteView.dart';
-import 'package:nukak/view/profile/ProfileView.dart';
-import 'package:nukak/view/profile/ProfileViewLogin.dart';
-import 'package:nukak/view/profile/ProfileViewEdit.dart';
+import 'package:nukak/view/profile/Login/my_shops.dart';
+
 import 'favorites/FavoriteView.dart';
 import 'home/HomeView.dart';
-import 'package:provider/provider.dart';
-
-import 'profile/ProfileView.dart';
+import 'profile/profile_menu/profile_menu_view.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -29,7 +25,7 @@ class _RootAppState extends State<RootApp> {
   }
 
   Widget getBody() {
-    List<Widget> views = [ProfileView(), HomeView(), FavoriteView()];
+    List<Widget> views = [ProfileScreen(), HomeView(), FavoriteView()];
     return IndexedStack(
       index: pageIndex,
       children: views,
@@ -54,19 +50,7 @@ class _RootAppState extends State<RootApp> {
         ),
       ); */
     } else {
-      return AppBar(
-        backgroundColor: Color(0xFFE4D5C2),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Favoritos",
-                style: TextStyle(
-                    fontFamily: 'PostNoBillsColombo',
-                    color: Colors.black,
-                    fontSize: 36))
-          ],
-        ),
-      );
+      return null;
     }
   }
 
