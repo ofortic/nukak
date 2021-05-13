@@ -6,11 +6,11 @@ import '../../../constants.dart';
 
 class SignupView extends StatelessWidget {
   @override
+  String name;
+  String em;
+  String pass1;
+  String pass2;
   Widget build(BuildContext context) {
-    String name;
-    String em;
-    String pass1;
-    String pass2;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
