@@ -10,6 +10,7 @@ import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/controller/storage_service.dart';
 import 'package:nukak/models/product.dart';
 import 'package:nukak/models/shop.dart';
+import 'package:nukak/view/profile/Login/accept_Decline_Modal.dart';
 import 'package:provider/provider.dart';
 import 'package:nukak/controller/db.dart' as db;
 
@@ -46,6 +47,16 @@ class CustomDialogBox extends StatelessWidget {
         );
       }),
     );
+  }
+
+  Future<void> showAcceptDeclineModal(
+      BuildContext context, String description) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return AceptDeclineModal(
+              title: "", descriptions: description, text: "ok");
+        });
   }
 
   Future<List<File>> loadAssets() async {
@@ -365,7 +376,7 @@ class CustomDialogBox extends StatelessWidget {
                             */
                             }
                           } else {
-                            print('invalid');
+                            showAcceptDeclineModal(context, 'Datos invalidos');
                           }
                           //loadAssets();
                         },
@@ -416,6 +427,15 @@ class CustomDialogBoxUpdate extends StatelessWidget {
       this.ancestorContext,
       this.product})
       : super(key: key);
+  Future<void> showAcceptDeclineModal(
+      BuildContext context, String description) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return AceptDeclineModal(
+              title: "", descriptions: description, text: "ok");
+        });
+  }
 
   @override
   Widget build(BuildContext context) {

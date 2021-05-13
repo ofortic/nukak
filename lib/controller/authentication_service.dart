@@ -20,8 +20,7 @@ class AuthenticationService {
           email: email, password: password);
       return "Signed IN";
     } catch (e) {
-      print("INVALID");
-      return "Invalid";
+      return "invalid";
     }
   }
 

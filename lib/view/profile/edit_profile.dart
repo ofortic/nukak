@@ -211,7 +211,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             suffixIcon: IconButton(
                               onPressed: () {
-                                if (myNameController.text.length > 0) {
+                                if (myNameController.text.trim().length > 0) {
                                   UserHelper.updateUserName(firebaseUser.uid,
                                           myNameController.text)
                                       .then((value) {
@@ -245,7 +245,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             suffixIcon: IconButton(
                               onPressed: () {
-                                if (myCityController.text.length > 0) {
+                                if (myCityController.text.trim().length > 0) {
                                   UserHelper.updateCity(firebaseUser.uid,
                                           myCityController.text)
                                       .then((value) {
@@ -279,7 +279,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             suffixIcon: IconButton(
                               onPressed: () {
-                                if (myPhoneController.text.length > 0) {
+                                if (myPhoneController.text.trim().length > 0) {
                                   UserHelper.updatePhone(firebaseUser.uid,
                                           myPhoneController.text)
                                       .then((value) {

@@ -270,6 +270,7 @@ Future<void> sendReport(Report re) async {
 Stream<List<Request>> getRequest() {
   return FirebaseFirestore.instance
       .collection('/requests')
+      .orderBy('datetime', descending: false)
       .snapshots()
       .map(toRequestList);
 }
@@ -279,6 +280,7 @@ Stream<List<Request>> getMyRequest(String uid) {
   return FirebaseFirestore.instance
       .collection('/requests')
       .where('userId', isEqualTo: uid)
+      .orderBy('datetime', descending: false)
       .snapshots()
       .map(toRequestList);
 }

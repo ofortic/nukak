@@ -66,17 +66,6 @@ class _AceptDeclineModalState extends State<AceptDeclineModal> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(
-                          "Rechazar",
-                          style: TextStyle(fontSize: 18, color: kPrimaryColor),
-                        )),
-                  ),
-                  Align(
                     alignment: Alignment.centerLeft,
                     child: TextButton(
                         onPressed: () {

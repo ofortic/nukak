@@ -4,11 +4,22 @@ import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/profile/Login/SignupView.dart';
 import 'package:provider/provider.dart';
 import '../../../constants.dart';
+import 'accept_Decline_Modal.dart';
 
 class LoginView extends StatelessWidget {
   @override
   String us;
   String con;
+  Future<void> showAcceptDeclineModal(
+      BuildContext context, String description) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return AceptDeclineModal(
+              title: "", descriptions: description, text: "ok");
+        });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -63,7 +74,12 @@ class LoginView extends StatelessWidget {
                             email: us,
                             password: con,
                           )
-                          .then((value) => print(value));
+                          .then((value) {
+                        if (value == 'invalid') {
+                          showAcceptDeclineModal(
+                              context, 'Usuario o contraseña invalidos');
+                        }
+                      });
                     },
                     child: Text(
                       "Ingresar",
@@ -114,7 +130,12 @@ class LoginView extends StatelessWidget {
                       context
                           .read<AuthenticationService>()
                           .signInWithGoogle()
-                          .then((value) => print(value));
+                          .then((value) {
+                        if (value == 'invalid') {
+                          showAcceptDeclineModal(
+                              context, 'Usuario o contraseña invalidos');
+                        }
+                      });
                     },
                   ),
                 ],

@@ -3,6 +3,7 @@ import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/profile/Login/LoginView.dart';
 import 'package:provider/provider.dart';
 import '../../../constants.dart';
+import 'accept_Decline_Modal.dart';
 
 class SignupView extends StatelessWidget {
   @override
@@ -10,6 +11,16 @@ class SignupView extends StatelessWidget {
   String em;
   String pass1;
   String pass2;
+  Future<void> showAcceptDeclineModal(
+      BuildContext context, String description) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return AceptDeclineModal(
+              title: "", descriptions: description, text: "ok");
+        });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -86,7 +97,7 @@ class SignupView extends StatelessWidget {
                           });
                         });
                       } else {
-                        print('invalid');
+                        showAcceptDeclineModal(context, 'Datos no validos');
                       }
                     },
                     child: Text(

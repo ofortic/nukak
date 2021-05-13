@@ -13,6 +13,17 @@ import 'package:provider/provider.dart';
 import 'package:nukak/controller/db.dart' as db;
 import '../../../constants.dart';
 import 'Dialog.dart';
+import 'accept_Decline_Modal.dart';
+
+Future<void> showAcceptDeclineModal(
+    BuildContext context, String description) async {
+  return await showDialog(
+      context: context,
+      builder: (context) {
+        return AceptDeclineModal(
+            title: "", descriptions: description, text: "ok");
+      });
+}
 
 class CreateShop extends StatelessWidget {
   @override
@@ -169,7 +180,7 @@ class CreateShop extends StatelessWidget {
                           });
                         });
                       } else {
-                        print('invalid');
+                        showAcceptDeclineModal(context, 'Datos invalidos');
                       }
                     },
                     child: Text(

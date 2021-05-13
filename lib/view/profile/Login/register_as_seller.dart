@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:nukak/controller/db.dart' as db;
 import '../../../constants.dart';
 import 'Dialog.dart';
+import 'accept_Decline_Modal.dart';
 
 class RegisterSeller extends StatelessWidget {
   @override
@@ -29,6 +30,16 @@ class RegisterSeller extends StatelessWidget {
   Future pickImageFromGallery() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) _imageFile = File(pickedFile.path);
+  }
+
+  Future<void> showAcceptDeclineModal(
+      BuildContext context, String description) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return AceptDeclineModal(
+              title: "", descriptions: description, text: "ok");
+        });
   }
 
   void _showPicker(context) {
@@ -154,7 +165,7 @@ class RegisterSeller extends StatelessWidget {
                           });
                         });
                       } else {
-                        print('invalid');
+                        showAcceptDeclineModal(context, 'Datos invalidos');
                       }
                     },
                     child: Text(
