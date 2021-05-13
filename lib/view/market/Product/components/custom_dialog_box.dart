@@ -111,258 +111,264 @@ class CustomDialogBox extends StatelessWidget {
   contentBox(context) {
     StorageService ss = ancestorContext.read<StorageService>();
     final firebaseUser = ancestorContext.watch<User>();
-    return Stack(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(
-              left: Constants.padding,
-              top: Constants.avatarRadius + Constants.padding,
-              right: Constants.padding,
-              bottom: Constants.padding),
-          margin: EdgeInsets.only(top: Constants.avatarRadius),
-          decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(Constants.padding),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
-              ]),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                this.title,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-              ),
-              /*
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                widget.descriptions,
-                style: TextStyle(fontSize: 14),
-                textAlign: TextAlign.center,
-              ),*/
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(168, 84, 27, 1),
-                    borderRadius: BorderRadius.all(Radius.circular(25))),
-                child: TextButton(
-                    onPressed: () {
-                      loadAssets().then((value) => imagesToUpload = value);
-                    },
-                    child: Text(
-                      "Añadir Imagenes",
-                      style: TextStyle(fontSize: 14, color: Colors.white),
-                    )),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              TextField(
-                controller: nameController,
-                obscureText: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Nombre del producto',
+    return SingleChildScrollView(
+      child: Stack(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(
+                left: Constants.padding,
+                top: Constants.avatarRadius + Constants.padding,
+                right: Constants.padding,
+                bottom: Constants.padding),
+            margin: EdgeInsets.only(top: Constants.avatarRadius),
+            decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(Constants.padding),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black,
+                      offset: Offset(0, 10),
+                      blurRadius: 10),
+                ]),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  this.title,
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
                 ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              TextField(
-                controller: descriptionController,
-                obscureText: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Descripcion',
+                /*
+                SizedBox(
+                  height: 15,
                 ),
-              ),
-              SizedBox(
-                height: 22,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(
-                          "No",
-                          style: TextStyle(fontSize: 18, color: kPrimaryColor),
-                        )),
+                Text(
+                  widget.descriptions,
+                  style: TextStyle(fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),*/
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(168, 84, 27, 1),
+                      borderRadius: BorderRadius.all(Radius.circular(25))),
+                  child: TextButton(
+                      onPressed: () {
+                        loadAssets().then((value) => imagesToUpload = value);
+                      },
+                      child: Text(
+                        "Añadir Imagenes",
+                        style: TextStyle(fontSize: 14, color: Colors.white),
+                      )),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  controller: nameController,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Nombre del producto',
                   ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: TextButton(
-                        onPressed: () {
-                          String url = '';
-                          if (nameController.text.trim().length != 0 &&
-                              descriptionController.text.trim().length != 0 &&
-                              imagesToUpload.length != 0) {
-                            if (imagesToUpload.length == 1) {
-                              print(1);
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  controller: descriptionController,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Descripcion',
+                  ),
+                ),
+                SizedBox(
+                  height: 22,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "No",
+                            style:
+                                TextStyle(fontSize: 18, color: kPrimaryColor),
+                          )),
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton(
+                          onPressed: () {
+                            String url = '';
+                            if (nameController.text.trim().length != 0 &&
+                                descriptionController.text.trim().length != 0 &&
+                                imagesToUpload.length != 0) {
+                              if (imagesToUpload.length == 1) {
+                                print(1);
 
-                              ss
-                                  .uploadImageToFirebase(
-                                      context, imagesToUpload[0])
-                                  .then((value1) {
                                 ss
-                                    .getDownloadUrl(context, value1)
-                                    .then((value) {
-                                  url += value;
-                                  db
-                                      .sendProduct(
-                                          shop.id,
-                                          Product(
-                                              nameController.text,
-                                              firebaseUser.uid,
-                                              shop.id,
-                                              descriptionController.text,
-                                              url))
+                                    .uploadImageToFirebase(
+                                        context, imagesToUpload[0])
+                                    .then((value1) {
+                                  ss
+                                      .getDownloadUrl(context, value1)
                                       .then((value) {
-                                    Navigator.of(context).pop();
+                                    url += value;
+                                    db
+                                        .sendProduct(
+                                            shop.id,
+                                            Product(
+                                                nameController.text,
+                                                firebaseUser.uid,
+                                                shop.id,
+                                                descriptionController.text,
+                                                url))
+                                        .then((value) {
+                                      Navigator.of(context).pop();
+                                    });
                                   });
                                 });
-                              });
-                            }
-                            if (imagesToUpload.length == 2) {
-                              print(2);
+                              }
+                              if (imagesToUpload.length == 2) {
+                                print(2);
 
-                              ss
-                                  .uploadImageToFirebase(
-                                      context, imagesToUpload[0])
-                                  .then((value1) {
                                 ss
-                                    .getDownloadUrl(context, value1)
-                                    .then((value) {
-                                  url += value;
-                                  print(1);
-
+                                    .uploadImageToFirebase(
+                                        context, imagesToUpload[0])
+                                    .then((value1) {
                                   ss
-                                      .uploadImageToFirebase(
-                                          context, imagesToUpload[1])
-                                      .then((value2) {
+                                      .getDownloadUrl(context, value1)
+                                      .then((value) {
+                                    url += value;
+                                    print(1);
+
                                     ss
-                                        .getDownloadUrl(context, value2)
-                                        .then((value3) {
-                                      url += ',' + value3;
-                                      db
-                                          .sendProduct(
-                                              shop.id,
-                                              Product(
-                                                  nameController.text,
-                                                  firebaseUser.uid,
-                                                  shop.id,
-                                                  descriptionController.text,
-                                                  url))
-                                          .then((value) {
-                                        Navigator.of(context).pop();
+                                        .uploadImageToFirebase(
+                                            context, imagesToUpload[1])
+                                        .then((value2) {
+                                      ss
+                                          .getDownloadUrl(context, value2)
+                                          .then((value3) {
+                                        url += ',' + value3;
+                                        db
+                                            .sendProduct(
+                                                shop.id,
+                                                Product(
+                                                    nameController.text,
+                                                    firebaseUser.uid,
+                                                    shop.id,
+                                                    descriptionController.text,
+                                                    url))
+                                            .then((value) {
+                                          Navigator.of(context).pop();
+                                        });
                                       });
                                     });
                                   });
                                 });
-                              });
-                            }
-                            if (imagesToUpload.length == 3) {
-                              print(3);
-                              ss
-                                  .uploadImageToFirebase(
-                                      context, imagesToUpload[0])
-                                  .then((value1) {
+                              }
+                              if (imagesToUpload.length == 3) {
+                                print(3);
                                 ss
-                                    .getDownloadUrl(context, value1)
-                                    .then((value) {
-                                  url += value;
+                                    .uploadImageToFirebase(
+                                        context, imagesToUpload[0])
+                                    .then((value1) {
                                   ss
-                                      .uploadImageToFirebase(
-                                          context, imagesToUpload[1])
-                                      .then((value2) {
+                                      .getDownloadUrl(context, value1)
+                                      .then((value) {
+                                    url += value;
                                     ss
-                                        .getDownloadUrl(context, value2)
-                                        .then((value3) {
-                                      url += ',' + value3;
+                                        .uploadImageToFirebase(
+                                            context, imagesToUpload[1])
+                                        .then((value2) {
                                       ss
-                                          .uploadImageToFirebase(
-                                              context, imagesToUpload[2])
-                                          .then((value4) {
+                                          .getDownloadUrl(context, value2)
+                                          .then((value3) {
+                                        url += ',' + value3;
                                         ss
-                                            .getDownloadUrl(context, value4)
-                                            .then((value5) {
-                                          url += ',' + value5;
-                                          db
-                                              .sendProduct(
-                                                  shop.id,
-                                                  Product(
-                                                      nameController.text,
-                                                      firebaseUser.uid,
-                                                      shop.id,
-                                                      descriptionController
-                                                          .text,
-                                                      url))
-                                              .then((value) {
-                                            Navigator.of(context).pop();
+                                            .uploadImageToFirebase(
+                                                context, imagesToUpload[2])
+                                            .then((value4) {
+                                          ss
+                                              .getDownloadUrl(context, value4)
+                                              .then((value5) {
+                                            url += ',' + value5;
+                                            db
+                                                .sendProduct(
+                                                    shop.id,
+                                                    Product(
+                                                        nameController.text,
+                                                        firebaseUser.uid,
+                                                        shop.id,
+                                                        descriptionController
+                                                            .text,
+                                                        url))
+                                                .then((value) {
+                                              Navigator.of(context).pop();
+                                            });
                                           });
                                         });
                                       });
                                     });
                                   });
                                 });
-                              });
-                            }
-                            if (imagesToUpload.length == 4) {
-                              print(4);
-                              ss
-                                  .uploadImageToFirebase(
-                                      context, imagesToUpload[0])
-                                  .then((value1) {
+                              }
+                              if (imagesToUpload.length == 4) {
+                                print(4);
                                 ss
-                                    .getDownloadUrl(context, value1)
-                                    .then((value) {
-                                  url += value;
+                                    .uploadImageToFirebase(
+                                        context, imagesToUpload[0])
+                                    .then((value1) {
                                   ss
-                                      .uploadImageToFirebase(
-                                          context, imagesToUpload[1])
-                                      .then((value2) {
+                                      .getDownloadUrl(context, value1)
+                                      .then((value) {
+                                    url += value;
                                     ss
-                                        .getDownloadUrl(context, value2)
-                                        .then((value3) {
-                                      url += ',' + value3;
+                                        .uploadImageToFirebase(
+                                            context, imagesToUpload[1])
+                                        .then((value2) {
                                       ss
-                                          .uploadImageToFirebase(
-                                              context, imagesToUpload[2])
-                                          .then((value4) {
+                                          .getDownloadUrl(context, value2)
+                                          .then((value3) {
+                                        url += ',' + value3;
                                         ss
-                                            .getDownloadUrl(context, value4)
-                                            .then((value5) {
-                                          url += ',' + value5;
+                                            .uploadImageToFirebase(
+                                                context, imagesToUpload[2])
+                                            .then((value4) {
                                           ss
-                                              .uploadImageToFirebase(
-                                                  context, imagesToUpload[3])
-                                              .then((value6) {
+                                              .getDownloadUrl(context, value4)
+                                              .then((value5) {
+                                            url += ',' + value5;
                                             ss
-                                                .getDownloadUrl(context, value6)
-                                                .then((value7) {
-                                              url += ',' + value7;
-                                              db
-                                                  .sendProduct(
-                                                      shop.id,
-                                                      Product(
-                                                          nameController.text,
-                                                          firebaseUser.uid,
-                                                          shop.id,
-                                                          descriptionController
-                                                              .text,
-                                                          url))
-                                                  .then((value) {
-                                                Navigator.of(context).pop();
+                                                .uploadImageToFirebase(
+                                                    context, imagesToUpload[3])
+                                                .then((value6) {
+                                              ss
+                                                  .getDownloadUrl(
+                                                      context, value6)
+                                                  .then((value7) {
+                                                url += ',' + value7;
+                                                db
+                                                    .sendProduct(
+                                                        shop.id,
+                                                        Product(
+                                                            nameController.text,
+                                                            firebaseUser.uid,
+                                                            shop.id,
+                                                            descriptionController
+                                                                .text,
+                                                            url))
+                                                    .then((value) {
+                                                  Navigator.of(context).pop();
+                                                });
                                               });
                                             });
                                           });
@@ -371,38 +377,40 @@ class CustomDialogBox extends StatelessWidget {
                                     });
                                   });
                                 });
-                              });
-                              /*
-                            */
+                                /*
+                              */
+                              }
+                            } else {
+                              showAcceptDeclineModal(
+                                  context, 'Datos invalidos');
                             }
-                          } else {
-                            showAcceptDeclineModal(context, 'Datos invalidos');
-                          }
-                          //loadAssets();
-                        },
-                        child: Text(
-                          "Si",
-                          style: TextStyle(fontSize: 18, color: kPrimaryColor),
-                        )),
-                  ),
-                ],
-              ),
-            ],
+                            //loadAssets();
+                          },
+                          child: Text(
+                            "Si",
+                            style:
+                                TextStyle(fontSize: 18, color: kPrimaryColor),
+                          )),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        Positioned(
-          left: Constants.padding,
-          right: Constants.padding,
-          child: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            radius: Constants.avatarRadius,
-            child: ClipRRect(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(Constants.avatarRadius)),
-                child: Image.asset("assets/images/logo2nukak.png")),
+          Positioned(
+            left: Constants.padding,
+            right: Constants.padding,
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              radius: Constants.avatarRadius,
+              child: ClipRRect(
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(Constants.avatarRadius)),
+                  child: Image.asset("assets/images/logo2nukak.png")),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

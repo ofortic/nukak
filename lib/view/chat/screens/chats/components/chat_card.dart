@@ -83,7 +83,9 @@ class ChatCard extends StatelessWidget {
                           Text(
                             snapshot.data.name + ' - ' + chat.productName,
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.034,
+                                fontWeight: FontWeight.w500),
                           ),
                           SizedBox(height: 8),
                           Opacity(
@@ -94,14 +96,14 @@ class ChatCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
+                          Opacity(
+                            opacity: 0.64,
+                            child: Text(DateFormat('yyyy-MM-dd – kk:mm')
+                                .format(chat.datetime)),
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                  Opacity(
-                    opacity: 0.64,
-                    child: Text(
-                        DateFormat('yyyy-MM-dd – kk:mm').format(chat.datetime)),
                   ),
                 ],
               ),

@@ -45,18 +45,15 @@ Widget getBody(BuildContext context, Shop shop, User fbu) {
           child: Column(
             children: [
               getProfilePhoto(context, shop),
+              SizedBox(height: 10),
               if (fbu.uid == shop.userId) getDescription(shop, context),
               if (fbu.uid != shop.userId) getDescriptionUser(shop, context),
             ],
           ),
         ),
         Expanded(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: getList(shop),
-          ),
-        )
+          child: getList(shop),
+        ),
       ],
     ),
   );
@@ -108,32 +105,27 @@ Future<void> showEditDialog(
 
 Widget getDescription(Shop shop, context) {
   return Center(
-    child: Padding(
-      padding: const EdgeInsets.only(left: 0, right: 0, top: 20, bottom: 0),
-      child: Column(
-        children: [
-          Text(shop.description,
-              style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.03,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-              textAlign: TextAlign.center),
-          SizedBox(height: 10),
-          Container(
-            decoration: BoxDecoration(
-                color: Color.fromRGBO(168, 84, 27, 1),
-                borderRadius: BorderRadius.all(Radius.circular(25))),
-            child: TextButton(
-                onPressed: () {
-                  showEditDialog(context, true, shop);
-                },
-                child: Text(
-                  "Añadir Producto",
-                  style: TextStyle(fontSize: 14, color: Colors.white),
-                )),
-          ),
-        ],
-      ),
+    child: Column(
+      children: [
+        Text(shop.description,
+            style: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+            textAlign: TextAlign.center),
+        SizedBox(height: 10),
+        Container(
+          decoration: BoxDecoration(
+              color: Color.fromRGBO(168, 84, 27, 1),
+              borderRadius: BorderRadius.all(Radius.circular(25))),
+          child: TextButton(
+              onPressed: () {
+                showEditDialog(context, true, shop);
+              },
+              child: Text(
+                "Añadir Producto",
+                style: TextStyle(fontSize: 14, color: Colors.white),
+              )),
+        ),
+      ],
     ),
   );
 }
@@ -146,7 +138,7 @@ Widget getDescriptionUser(Shop shop, context) {
         children: [
           Text(shop.description,
               style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.03,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
               textAlign: TextAlign.center),

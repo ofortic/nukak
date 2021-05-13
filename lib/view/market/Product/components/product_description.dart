@@ -18,23 +18,24 @@ class ProductDescription extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.3),
-          child: Text(
-            product.name,
-            style: Theme.of(context).textTheme.headline6,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              product.name,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ],
         ),
-        Padding(
-          padding: EdgeInsets.only(
-            left: 20, //getProportionateScreenWidth(20),
-            right: 64, //getProportionateScreenWidth(64),
-          ),
-          child: Text(
-            product.description,
-            maxLines: 3,
-          ),
+        SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              product.description,
+              maxLines: 3,
+            ),
+          ],
         ),
         Padding(
           padding: EdgeInsets.symmetric(

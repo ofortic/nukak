@@ -24,7 +24,7 @@ class MessagesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildAppBar(context),
       body: Body(
         chat: this.chat,
         uid: this.uid,
@@ -32,7 +32,7 @@ class MessagesScreen extends StatelessWidget {
     );
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: kPrimaryColor,
       automaticallyImplyLeading: false,
@@ -47,8 +47,9 @@ class MessagesScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                ' ' + name + ' - ' + productName,
-                style: TextStyle(fontSize: 16),
+                ' ' + name + ' -\n ' + productName,
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.041),
               ),
             ],
           )
