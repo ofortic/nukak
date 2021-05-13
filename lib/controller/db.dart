@@ -178,7 +178,7 @@ Future<List<Chat>> isThereAChat(
 Stream<List<Message>> getMessages(String chatId) {
   return FirebaseFirestore.instance
       .collection('chats/$chatId/messages')
-      .orderBy('datetime')
+      .orderBy('datetime', descending: true)
       .snapshots()
       .map(toMessageList);
 }

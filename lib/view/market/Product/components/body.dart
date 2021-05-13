@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/models/chat.dart';
 import 'package:nukak/models/message.dart';
+import 'package:nukak/view/chat/screens/chats/chats_screen.dart';
 import 'package:nukak/view/chat/screens/messages/message_screen.dart';
 import 'package:nukak/view/market/Product/components/default_buttom.dart';
 import 'package:nukak/models/product.dart';
@@ -99,13 +100,7 @@ class Body extends StatelessWidget {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        MessagesScreen(
-                                                      chat: ch,
-                                                      name: snapshot.data.name,
-                                                      url: product.url,
-                                                      productName: product.name,
-                                                      uid: firebaseUser.uid,
-                                                    ),
+                                                        ChatsScreen(),
                                                   ),
                                                 );
                                               });
