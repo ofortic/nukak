@@ -28,14 +28,18 @@ class ProductDescription extends StatelessWidget {
           ],
         ),
         SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              product.description,
-              maxLines: 3,
+        Center(
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Wrap(
+              children: [
+                Text(
+                  product.description,
+                  maxLines: 3,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(

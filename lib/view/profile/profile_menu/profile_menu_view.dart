@@ -23,12 +23,19 @@ class ProfileScreen extends StatelessWidget {
           } else {
             if (snapshot.data.role == 'craftsman') {
               return Scaffold(
-                  appBar: getAppBarHome(context), body: BodyCraftsman());
+                  backgroundColor: Color(0xFFE4D5C2),
+                  appBar: getAppBarHome(context),
+                  body: BodyCraftsman());
             } else if (snapshot.data.role == 'user') {
-              return Scaffold(appBar: getAppBarHome(context), body: BodyUser());
+              return Scaffold(
+                  backgroundColor: Color(0xFFE4D5C2),
+                  appBar: getAppBarHome(context),
+                  body: BodyUser());
             } else {
               return Scaffold(
-                  appBar: getAppBarHome(context), body: BodyAdmin());
+                  backgroundColor: Color(0xFFE4D5C2),
+                  appBar: getAppBarHome(context),
+                  body: BodyAdmin());
             }
           }
         });

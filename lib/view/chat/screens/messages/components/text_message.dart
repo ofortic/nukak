@@ -26,13 +26,17 @@ class TextMessage extends StatelessWidget {
             .withOpacity(message.isSender(firebaseUser.uid) ? 1 : 0.1),
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Text(
-        message.text,
-        style: TextStyle(
-          color: message.isSender(firebaseUser.uid)
-              ? Colors.white
-              : Theme.of(context).textTheme.bodyText1.color,
-        ),
+      child: Wrap(
+        children: [
+          Text(
+            message.text,
+            style: TextStyle(
+              color: message.isSender(firebaseUser.uid)
+                  ? Colors.white
+                  : Theme.of(context).textTheme.bodyText1.color,
+            ),
+          ),
+        ],
       ),
     );
   }

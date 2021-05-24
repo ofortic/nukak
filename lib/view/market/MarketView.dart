@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,13 @@ import 'package:nukak/view/home/snerror.dart';
 import 'package:nukak/view/market/Product/ProductView.dart';
 import 'package:nukak/view/market/Product/components/custom_dialog_box.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../constants.dart';
+import '../../constants.dart';
+import '../../controller/authentication_service.dart';
+import '../../controller/authentication_service.dart';
+import '../../controller/authentication_service.dart';
 
 class MarketView extends StatelessWidget {
   final Shop shop;
@@ -25,11 +33,60 @@ class MarketView extends StatelessWidget {
       backgroundColor: Color.fromRGBO(226, 215, 171, 1),
       appBar: getAppBarHome(context),
       body: getBody(context, shop, firebaseUser),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your onPressed code here!
+          getUserOwner(shop.userId);
+        },
+        child: const Icon(Icons.location_on_rounded),
+        backgroundColor: kPrimaryColor,
+      ),
     );
   }
 }
 
+Future getUserOwner(String id) async {
+  var googleMapsUrl = '';
+  try {
+    await UserHelper.getUserChat(id).then((snapshot) {
+      googleMapsUrl = adressFormat(snapshot.city);
+      print(googleMapsUrl);
+      _launchURL(snapshot.city);
+    });
+  } catch (e) {
+    print(e.toString());
+    return null;
+  }
+}
+
+String adressFormat(String adress) {
+  var adressFormated = "";
+  adress.runes.forEach((int i) {
+    var letter = new String.fromCharCode(i);
+    if (letter == " ") {
+      adressFormated = adressFormated + "+";
+    } else {
+      if (letter == "#") {
+        adressFormated = adressFormated + "%23";
+      }
+    }
+    //print(letter);
+  });
+  return adressFormated;
+}
+
+_launchURL(String googleUrl) async {
+  print(googleUrl);
+  var url = 'https://www.google.com/maps/place/' + googleUrl;
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
 Widget getBody(BuildContext context, Shop shop, User fbu) {
+  //getUserOwner(shop.userId);
   return Container(
     height: MediaQuery.of(context).size.height,
     width: MediaQuery.of(context).size.width,

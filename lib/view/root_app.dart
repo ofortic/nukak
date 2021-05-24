@@ -70,7 +70,7 @@ class _RootAppState extends State<RootApp> {
       width: double.infinity,
       height: 60,
       decoration: BoxDecoration(
-          color: Color(0xFF979797),
+          color: Color(0xFF934930),
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10), topRight: Radius.circular(10))),
       child: Padding(
