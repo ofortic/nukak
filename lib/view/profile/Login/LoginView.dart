@@ -116,7 +116,7 @@ class LoginView extends StatelessWidget {
                   ),
                 ],
               ),
-              OrDivider(),
+              //OrDivider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -124,7 +124,7 @@ class LoginView extends StatelessWidget {
                     iconSrt: "assets/images/facebook.png",
                     press: () {},
                   ),*/
-                  SocialIcon(
+                  /*SocialIcon(
                     iconSrt: "assets/images/google.png",
                     press: () {
                       context
@@ -137,7 +137,7 @@ class LoginView extends StatelessWidget {
                         }
                       });
                     },
-                  ),
+                  ),*/
                 ],
               ),
             ],
