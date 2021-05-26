@@ -13,12 +13,16 @@ import 'package:nukak/constants.dart';
 import 'package:nukak/view/profile/Login/accept_Decline_Modal.dart';
 
 class MyRequest extends StatelessWidget {
+  String uid;
+  MyRequest({Key key, @required this.uid}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    print(uid);
     return Scaffold(
       backgroundColor: Color(0xFFE4D5C2),
       appBar: getAppBarHome(context),
-      body: getBody(context),
+      body: getBody(uid),
     );
   }
 
@@ -45,10 +49,9 @@ class MyRequest extends StatelessWidget {
     );
   }
 
-  Widget getBody(BuildContext context) {
-    final firebaseUser = context.watch<User>();
+  Widget getBody(String uid) {
     return StreamBuilder(
-        stream: db.getMyRequest(firebaseUser.uid),
+        stream: db.getMyRequest(uid),
         builder: (context, AsyncSnapshot<List<Request>> snapshot) {
           if (snapshot.hasError) {
             return SnapshotError(snapshot.error);

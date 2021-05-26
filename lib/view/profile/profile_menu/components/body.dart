@@ -1,3 +1,6 @@
+
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nukak/controller/authentication_service.dart';
 import 'package:nukak/view/chat/screens/chats/chats_screen.dart';
@@ -78,7 +81,10 @@ class Body extends StatelessWidget {
 
 class BodyUser extends StatelessWidget {
   @override
+  
   Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User>();
+    print(firebaseUser.uid);
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
@@ -133,9 +139,10 @@ class BodyUser extends StatelessWidget {
             text: "Revisar solicitud",
             icon: "assets/images/trade.png",
             press: () {
+              print("este es el usuario"+firebaseUser.uid);
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => MyRequest(),
+                  builder: (context) => MyRequest(uid: firebaseUser.uid),
                 ),
               );
             },
